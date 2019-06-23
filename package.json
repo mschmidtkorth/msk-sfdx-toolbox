@@ -2,7 +2,7 @@
 	"name": "msk-sfdx-toolbox",
 	"publisher": "mischmiko",
 	"displayName": "MSK sfdx Toolbox",
-	"description": "Useful commands for SFDX Development",
+	"description": "Useful commands for Salesforce DX (SFDX) Development",
 	"author": {
 		"name": "Michael Schmidt-Korth",
 		"email": "mschmidtkorth@salesforce.com"

@@ -1,5 +1,9 @@
 # MSK sfdx Toolbox
 [![sfdx](https://img.shields.io/badge/cli-sfdx-brightgreen.svg)](https://developer.salesforce.com/tools/sfdxcli)
+[![sfdx](https://img.shields.io/badge/license-MOZ-brightgreen.svg)](https://github.com/mschmidtkorth/msk-sfdx-toolbox/blob/master/LICENSE)
+[![sfdx](https://vsmarketplacebadge.apphb.com/version-short/mischmiko.msk-sfdx-toolbox.svg)](https://marketplace.visualstudio.com/items?itemName=mischmiko.msk-sfdx-toolbox)
+[![sfdx](https://img.shields.io/github/issues-raw/mschmidtkorth/msk-sfdx-toolbox.svg)](https://github.com/mschmidtkorth/msk-sfdx-toolbox/issues)
+
 
 Simplifies development with Salesforce DX.
 
