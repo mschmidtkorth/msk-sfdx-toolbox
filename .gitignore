@@ -1,0 +1,4 @@
+*.code-workspace
+.vscodeignore
+out/
+node_modules/

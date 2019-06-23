@@ -1,0 +1,97 @@
+{
+	"name": "msk-sfdx-toolbox",
+	"publisher": "mischmiko",
+	"displayName": "MSK sfdx Toolbox",
+	"description": "Useful commands for SFDX Development",
+	"author": {
+		"name": "Michael Schmidt-Korth",
+		"email": "mschmidtkorth@salesforce.com"
+	},
+	"version": "0.0.3",
+	"preview": true,
+	"icon": "images/salesforceDX.png",
+	"engines": {
+		"vscode": "^1.35.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"keywords": [
+		"MSK",
+		"SFDX",
+		"Salesforce DX"
+	],
+	"activationEvents": [
+		"onCommand:msk.comparePermissions",
+		"onCommand:msk.openScratchOrg",
+		"onLanguage:apex"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [{
+			"command": "msk.comparePermissions",
+			"title": "Compare Permissions",
+			"category": "MSK"
+		}, {
+			"command": "msk.openScratchOrg",
+			"title": "Open Org",
+			"category": "MSK"
+		}],
+		"keybindings": [{
+			"command": "msk.comparePermissions",
+			"key": "cmd+shift+s p",
+			"mac": "cmd+shift+s p",
+			"win": "ctrl+shift+s p",
+			"linux": "ctrl+shift+s p"
+		}, {
+			"command": "msk.openScratchOrg",
+			"key": "cmd+shift+s o",
+			"mac": "cmd+shift+s o",
+			"win": "ctrl+shift+s o",
+			"linux": "ctrl+shift+s o"
+		}],
+		"configuration": {
+			"type": "object",
+			"title": "MSK SFDX Toolbox configuration",
+			"properties": {
+				"msk.defaultWorkingDirectory": {
+					"type": "string",
+					"default": null,
+					"description": "Specifies the default working directory if you are not using any VS Code workspace."
+				},
+				"msk.defaultCompareScriptDirectory": {
+					"type": "string",
+					"default": null,
+					"description": "Specifies the directory that contains the mergeProfileOrPermSet shell script."
+				}
+			}
+		},
+		"menus": {
+			"editor/context": [{
+				"command": "msk.comparePermissions",
+				"group": "3_compare",
+				"when": "resourceExtname == .xml"
+			}]
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "npm run compile && node ./node_modules/vscode/bin/test"
+	},
+	"devDependencies": {
+		"typescript": "^3.3.1",
+		"vscode": "^1.1.28",
+		"tslint": "^5.12.1",
+		"@types/node": "^10.12.21",
+		"@types/mocha": "^2.2.42",
+		"realpath": "^1.0.0"
+	},
+	"dependencies": {
+		"typescript": "^3.3.1",
+		"@types/node": "^10.12.21",
+		"@types/mocha": "^2.2.42"
+	}
+}
