@@ -46,9 +46,15 @@ export function comparePermissions() {
 						fs.accessSync(utils.getPath() + '/utils/mergeProfileOrPermSet.sh');
 					} catch (e) {
 						console.error('mergeProfileOrPermSet.sh not found at "' + compareScriptPath + '".');
-						vscode.window.showErrorMessage('mergeProfileOrPermSet.sh not found. Please check your working directory. Stopping.', 'Open working directory').then(button => {
-							vscode.window.setStatusBarMessage('Opening working directory', 5000);
-							vscode.commands.executeCommand('vscode.openFolder', Uri.file(utils.getPath() + '/'), true);
+						vscode.window.showErrorMessage('mergeProfileOrPermSet.sh not found. Please check your working directory or update your default directory. Stopping.', 'Open working directory', 'Open Settings').then(button => {
+							if (button === 'Open Settings') {
+								vscode.window.setStatusBarMessage('Opening Settings', 5000);
+								vscode.commands.executeCommand('workbench.action.openSettings2');
+								vscode.window.showInformationMessage('Search for "MSK sfdx Toolbox".')
+							} else {
+								vscode.window.setStatusBarMessage('Opening working directory', 5000);
+								vscode.commands.executeCommand('vscode.openFolder', Uri.file(utils.getPath() + '/'), true);
+							}
 						});
 					}
 				}

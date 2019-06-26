@@ -18,3 +18,8 @@
 
 ### Removed
 - `msk.listPermissions` which is included in `msk.comparePermissions`
+
+## 0.0.04
+### Added
+- Support for deleting a Scratch Org (instead of opening it)
+- Support for validating a deployment against a Scratch Org

@@ -7,7 +7,7 @@
 		"name": "Michael Schmidt-Korth",
 		"email": "mschmidtkorth@salesforce.com"
 	},
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"preview": true,
 	"icon": "images/salesforceDX.png",
 	"galleryBanner": {
@@ -36,6 +36,8 @@
 	],
 	"activationEvents": [
 		"onCommand:msk.comparePermissions",
+		"onCommand:msk.validateChanges",
+		"onCommand:msk.deleteScratchOrg",
 		"onCommand:msk.openScratchOrg",
 		"onLanguage:apex"
 	],
@@ -48,6 +50,14 @@
 		}, {
 			"command": "msk.openScratchOrg",
 			"title": "Open Org",
+			"category": "MSK"
+		}, {
+			"command": "msk.deleteScratchOrg",
+			"title": "Delete Scratch Org",
+			"category": "MSK"
+		}, {
+			"command": "msk.validateChanges",
+			"title": "Validate Changes",
 			"category": "MSK"
 		}],
 		"keybindings": [{
@@ -70,12 +80,17 @@
 				"msk.defaultWorkingDirectory": {
 					"type": "string",
 					"default": null,
-					"description": "Specifies the default working directory if you are not using any VS Code workspace."
+					"description": "The default working directory if you are not using any VS Code workspace."
 				},
 				"msk.defaultCompareScriptDirectory": {
 					"type": "string",
 					"default": null,
-					"description": "Specifies the directory that contains the mergeProfileOrPermSet shell script."
+					"description": "The directory that contains the mergeProfileOrPermSet shell script."
+				},
+				"msk.validationScratchOrg": {
+					"type": "string",
+					"default": null,
+					"description": "The username or alias of the Scratch Org to use for validation deployments."
 				}
 			}
 		},
