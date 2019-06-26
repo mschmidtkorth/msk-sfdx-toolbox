@@ -24,8 +24,9 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand('msk.deleteScratchOrg', function execute() { listAllOrgs(OrgType.Scratch, Operation.Delete); }));
 	// context.subscriptions.push(vscode.commands.registerCommand('msk.deleteScratchOrg', validateChanges));
 
-	/* Validates local changes against Scratch Org and Sandbox. */
-	context.subscriptions.push(vscode.commands.registerCommand('msk.validateChanges', validateChanges));
+	/* Validates local changes against Scratch Org or Sandbox. */
+	context.subscriptions.push(vscode.commands.registerCommand('msk.validateChanges', function execute() { listAllOrgs(OrgType.ScratchDev, Operation.Validate); }));
+	//context.subscriptions.push(vscode.commands.registerCommand('msk.validateChanges', validateChanges));
 }
 
 /**
