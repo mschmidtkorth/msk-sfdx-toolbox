@@ -2,7 +2,6 @@ import * as vscode from 'vscode'; // VS Code Extension API
 import { window, workspace } from 'vscode';
 import child_process = require('child_process'); // Provides exec()
 import Utils from '../utils/utils';
-import { listAllOrgs } from './listOrgs';
 
 /**
  * Validates current branch of local repository against a default (alias: VALIDATE) Scratch Org or Sandbox.

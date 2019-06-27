@@ -4,6 +4,9 @@ import { validateChanges } from './command/validateChanges'; // function
 import { listAllOrgs } from './command/listOrgs'; // function
 import { OrgType, Operation } from './command/listOrgs'; // Enum
 // import { promisify } from 'util'; // Allows to use note-util's promise function with async/await to get shell commands which read immediately.
+// import { OrgExplorer } from './orgExplorer';
+
+export declare var globalContext: vscode.ExtensionContext; // Export the context as we cannot pass it as an argument
 
 /**
  * This method is called when the extension is activated.
@@ -17,16 +20,16 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand('msk.comparePermissions', comparePermissions));
 
 	/* Opens a Scratch Org or Dev Hub without setting it as default. */
-	context.subscriptions.push(vscode.commands.registerCommand('msk.openScratchOrg', function execute() { listAllOrgs(OrgType.ScratchDev, Operation.Open); }));
-	// context.subscriptions.push(vscode.commands.registerCommand('msk.openScratchOrg', openScratchOrg));
+	context.subscriptions.push(vscode.commands.registerCommand('msk.openScratchOrg', function execute() { listAllOrgs(OrgType.ScratchDev, Operation.Open, context); }));
 
 	/* Deletes a Scratch Org. */
-	context.subscriptions.push(vscode.commands.registerCommand('msk.deleteScratchOrg', function execute() { listAllOrgs(OrgType.Scratch, Operation.Delete); }));
-	// context.subscriptions.push(vscode.commands.registerCommand('msk.deleteScratchOrg', validateChanges));
+	context.subscriptions.push(vscode.commands.registerCommand('msk.deleteScratchOrg', function execute() { listAllOrgs(OrgType.Scratch, Operation.Delete, context); }));
 
 	/* Validates local changes against Scratch Org or Sandbox. */
-	context.subscriptions.push(vscode.commands.registerCommand('msk.validateChanges', function execute() { listAllOrgs(OrgType.ScratchDev, Operation.Validate); }));
-	//context.subscriptions.push(vscode.commands.registerCommand('msk.validateChanges', validateChanges));
+	context.subscriptions.push(vscode.commands.registerCommand('msk.validateChanges', function execute() { listAllOrgs(OrgType.ScratchDev, Operation.Validate, context); }));
+
+	/* Sidebar */
+	// new OrgExplorer(context); // Potential future implementation to list all orgs in sidebar for quick access (caching)
 }
 
 /**
