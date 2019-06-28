@@ -1,12 +1,14 @@
 import * as vscode from 'vscode'; // VS Code Extension API
 import { window, workspace, commands, ExtensionContext, QuickPick, QuickInputButtons, QuickInputButton, QuickPickItem, QuickPickOptions, Uri } from 'vscode';
-import child_process = require('child_process'); // Provides exec()
+import cp = require('child_process'); // Provides exec()
 import { exists } from 'fs';
 import Utils from '../utils/utils';
+const fs = require('fs');
+
 /**
  * Compares the local version of a Permission Set/Profile in a branch with the local version of the same in the master branch.
- * Uses Marco Zeuli's script to compare permissions.
- * @author Michael Schmidt-Korth <mschmidtkorth@salesforce.com>
+ * @remarks Uses Marco Zeuli's `mergeProfileOrPermSet.sh` script to compare permissions.
+ * @author Michael Schmidt-Korth mschmidtkorth(at)salesforce.com
  */
 export function comparePermissions() {
 	vscode.window.showInformationMessage('Ensure your master branch is up to date. Files are compared locally.', 'OK');
@@ -27,14 +29,13 @@ export function comparePermissions() {
 			vscode.window.showErrorMessage('No permission files found. Have you added the project folder to your workspace? Stopping.', 'OK');
 		}
 		window.showQuickPick(displayFiles, { placeHolder: 'Select a permission file', matchOnDescription: true }).then(returnValue => {
-			if (returnValue != null) { // Otherwise error "returnValue is possibly 'undefined'"
+			if (typeof returnValue !== 'undefined') {
 				const filePath = returnValue.filePath;
 				vscode.window.setStatusBarMessage('Checking conflicts for ' + returnValue.label + ' ...', 5000);
 
 				console.log('Executing mergeProfileOrPermSet.sh for ' + filePath);
 
 				let compareScriptPath;
-				var fs = require('fs');
 				// Attempt to use the user-specified directory. If it fails, attempt to use the relative path to the working directory. If it fails, throw error.
 				try {
 					compareScriptPath = vscode.workspace.getConfiguration('msk').get('defaultCompareScriptDirectory') + '/mergeProfileOrPermSet.sh';
@@ -50,7 +51,7 @@ export function comparePermissions() {
 							if (button === 'Open Settings') {
 								vscode.window.setStatusBarMessage('Opening Settings', 5000);
 								vscode.commands.executeCommand('workbench.action.openSettings2');
-								vscode.window.showInformationMessage('Search for "MSK sfdx Toolbox".')
+								vscode.window.showInformationMessage('Search for "MSK sfdx Toolbox".');
 							} else {
 								vscode.window.setStatusBarMessage('Opening working directory', 5000);
 								vscode.commands.executeCommand('vscode.openFolder', Uri.file(utils.getPath() + '/'), true);
@@ -59,8 +60,7 @@ export function comparePermissions() {
 					}
 				}
 
-				const cp = require('child_process');
-				cp.exec(
+				cp.exec( // No progress indicator as command executes quickly
 					'bash "' + compareScriptPath + '" master ' + '"' + filePath + '"',
 					{ cwd: utils.getPath() },
 					function (error: any, output: any) { // Beware: Always returned in this sequence, do not use output,error
@@ -69,6 +69,13 @@ export function comparePermissions() {
 			}
 		});
 
+		/**
+		 * Processes the result file of `mergeProfileOrPermSet.sh`.
+		 * @param output - Output of the script.
+		 * @param error - Error of the script.
+		 * @param file - Processed permission file.
+		 * @author Michael Schmidt-Korth mschmidtkorth(at)salesforce.com
+		 */
 		function processFile(output: string, error: string, filePath: string) {
 			// Even if mergeProfileOrPermSet.sh executes successfully (0), it may still throw an exception explicitly - however, in Marco's code he does not throw a failure but simply outputs 'Error: ', therefore we should also recognize such outputs as errors.
 			if (output && output.substr(0, 5) !== 'Error' && output.substr(0, 7) !== 'WARNING') {

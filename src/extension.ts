@@ -1,6 +1,5 @@
 import * as vscode from 'vscode'; // VS Code Extension API
 import { comparePermissions } from './command/comparePermissions'; // Import sub-module
-import { validateChanges } from './command/validateChanges'; // function
 import { listAllOrgs } from './command/listOrgs'; // function
 import { OrgType, Operation } from './command/listOrgs'; // Enum
 // import { promisify } from 'util'; // Allows to use note-util's promise function with async/await to get shell commands which read immediately.
@@ -11,7 +10,8 @@ export declare var globalContext: vscode.ExtensionContext; // Export the context
 /**
  * This method is called when the extension is activated.
  * When the extension is activated, it passes the current extension context as an argument.
- * @author Michael Schmidt-Korth <mschmidtkorth@salesforce.com>
+ * @param context - The extenion's context.
+ * @author Michael Schmidt-Korth mschmidtkorth(at)salesforce.com
  */
 export function activate(context: vscode.ExtensionContext) {
 	console.log('Activated extension "msk-sfdx-toolbox".');
