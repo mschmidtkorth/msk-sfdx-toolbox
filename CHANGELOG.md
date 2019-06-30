@@ -6,13 +6,13 @@
 
 ### Added
 
-- New command **>MSK: Compare Permissions**: Support for comparing permissions
+- New command **>MSK: Compare Permissions**: Compare permission files between your current branch and `master`
 
 ## 0.0.2
 
 ### Added
 
-- New command **>MSK: Open Org**: Support for opening Scratch Orgs
+- New command **>MSK: Open Org**: Open a Scratch Orgs or Dev Hub
 - Setting to define default working directory
 
 ## 0.0.3
@@ -31,8 +31,8 @@
 
 ### Added
 
-- New command **>MSK: Delete Scratch Org**: Support for deleting a Scratch Org (instead of opening it)
-- New command **>MSK: Validate Changes**: Support for validating a deployment against a Scratch Org
+- New command **>MSK: Delete Scratch Org**: Delete a Scratch Org (instead of opening it)
+- New command **>MSK: Validate Changes**: Validate a deployment against a Scratch Org or Sandbox
 
 ## 0.0.5
 
@@ -59,4 +59,11 @@ Feature-completion.
 
 ### Added
 
-- New command **>MSK: Open Current File In Org**: Support for showing the current file in your Salesforce org
+- New command **>MSK: Open Current File In Org**: Show the currently opened file in your Salesforce org
+
+## 1.0.3
+
+### Added
+
+- Context menu entries for **>MSK: Open Current File In Org** and **>MSK: Compare Permissions** when right-clicking a file
+- View button/icon for **>MSK: Open Current File In Org** when opening a file (top right)

@@ -11,6 +11,7 @@ import Utils from '../../utils/utils';
  * @author Michael Schmidt-Korth mschmidtkorth(at)salesforce.com
  */
 export function openFileInOrg(orgName: string, filePath: string, context: vscode.ExtensionContext) {
+	console.log(context);
 	console.log('Received file to open: ' + filePath);
 	var utils = new Utils();
 
