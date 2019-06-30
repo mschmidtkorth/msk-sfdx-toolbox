@@ -29,10 +29,10 @@ export function activate(context: vscode.ExtensionContext) {
 	/* Validates local changes against Scratch Org or Sandbox. */
 	context.subscriptions.push(vscode.commands.registerCommand('msk.validateChanges', function execute() { listAllOrgs(OrgType.ScratchDev, Operation.Validate, context); }));
 
-	/* Show currently opened file in browser / org. */
+	/* Shows currently opened file in browser / org. */
 	context.subscriptions.push(vscode.commands.registerCommand('msk.openFileInOrg',
 		function execute() {
-			if (vscode.window.activeTextEditor === undefined) { // TODO Does not yet check for valid extension.
+			if (vscode.window.activeTextEditor === undefined) { // TODO Does not yet check for valid file extension.
 				vscode.window.showErrorMessage('Please open any XML file first.');
 			} else {
 				listAllOrgs(OrgType.ScratchDev, Operation.OpenFile, context, vscode.window.activeTextEditor.document.fileName);

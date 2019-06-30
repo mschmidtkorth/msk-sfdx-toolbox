@@ -1,7 +1,6 @@
 import * as vscode from 'vscode'; // VS Code Extension API
 import { ProgressLocation } from 'vscode';
 import cp = require('child_process'); // Provides exec()
-import { exists } from 'fs';
 import Utils from '../../utils/utils';
 
 /**
@@ -188,6 +187,7 @@ export function openFileInOrg(orgName: string, filePath: string, context: vscode
 	 * Generates the query to receive the Record Id.
 	 * @returns SOQL query to receive a Record Id.
 	 * @param componentLinks - JSON configuration for a given component.
+	 * @author Michael Schmidt-Korth mschmidtkorth(at)salesforce.com
 	 */
 	function generateQuery(componentLinks: any): string {
 		let queryWhat: string;
@@ -226,6 +226,7 @@ export function openFileInOrg(orgName: string, filePath: string, context: vscode
 	 * @returns URL to open.
 	 * @param componentLinks - JSON configuration for a given component.
 	 * @param response - JSON response from Salesforce.
+	 * @author Michael Schmidt-Korth mschmidtkorth(at)salesforce.com
 	 */
 	function generateLink(componentLinks: any, response: any): string {
 		// Assumption for the response: Always exactly 1 response as we filter by API name
