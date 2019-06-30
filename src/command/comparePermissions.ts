@@ -10,7 +10,7 @@ const fs = require('fs');
  * @remarks Uses Marco Zeuli's `mergeProfileOrPermSet.sh` script to compare permissions.
  * @author Michael Schmidt-Korth mschmidtkorth(at)salesforce.com
  */
-export function comparePermissions() {
+export function comparePermissions(context: vscode.ExtensionContext) {
 	vscode.window.showInformationMessage('Ensure your master branch is up to date. Files are compared locally.', 'OK');
 	var utils = new Utils();
 
@@ -36,27 +36,34 @@ export function comparePermissions() {
 				console.log('Executing mergeProfileOrPermSet.sh for ' + filePath);
 
 				let compareScriptPath;
-				// Attempt to use the user-specified directory. If it fails, attempt to use the relative path to the working directory. If it fails, throw error.
+				// Determine the path to the mergeProfileOrPermSet.sh script. Check configuration first. If it fails, attempt to use the user-specified directory. If it fails, attempt to use the relative path to the working directory. If it fails, attempt to use the extension directory. This allows the user to use a newer/different version of the script than bundled with the extension.
 				try {
 					compareScriptPath = vscode.workspace.getConfiguration('msk').get('defaultCompareScriptDirectory') + '/mergeProfileOrPermSet.sh';
 					fs.accessSync(compareScriptPath + '/mergeProfileOrPermSet.sh'); // Continues if no error, throws exception if error
 				} catch (e) {
-					console.log('mergeProfileOrPermSet.sh not found at user-specified directory "' + compareScriptPath + '". Checking directory relative to working dir.');
+					console.warn('mergeProfileOrPermSet.sh not found at user-specified directory "' + compareScriptPath + '". Checking directory relative to working dir.');
 					try {
 						compareScriptPath = utils.getPath() + '/utils/mergeProfileOrPermSet.sh';
 						fs.accessSync(utils.getPath() + '/utils/mergeProfileOrPermSet.sh');
 					} catch (e) {
-						console.error('mergeProfileOrPermSet.sh not found at "' + compareScriptPath + '".');
-						vscode.window.showErrorMessage('mergeProfileOrPermSet.sh not found. Please check your working directory or update your default directory. Stopping.', 'Open working directory', 'Open Settings').then(button => {
-							if (button === 'Open Settings') {
-								vscode.window.setStatusBarMessage('Opening Settings', 5000);
-								vscode.commands.executeCommand('workbench.action.openSettings2');
-								vscode.window.showInformationMessage('Search for "MSK sfdx Toolbox".');
-							} else {
-								vscode.window.setStatusBarMessage('Opening working directory', 5000);
-								vscode.commands.executeCommand('vscode.openFolder', Uri.file(utils.getPath() + '/'), true);
-							}
-						});
+						console.warn('mergeProfileOrPermSet.sh not found at "' + compareScriptPath + '". Attempting to receive it from extension');
+						try {
+							console.log('Checking extension at ' + context.extensionPath + '/scripts/mergeProfileOrPermSet.sh');
+							compareScriptPath = context.extensionPath + '/scripts/mergeProfileOrPermSet.sh';
+							fs.accessSync(context.extensionPath + '/scripts/mergeProfileOrPermSet.sh');
+						} catch (e) {
+							console.error('Unable to locate mergeProfileOrPermSet.sh');
+							vscode.window.showErrorMessage('mergeProfileOrPermSet.sh not found. Please check your working directory or update your default directory. Stopping.', 'Open working directory', 'Open Settings').then(button => {
+								if (button === 'Open Settings') {
+									vscode.window.setStatusBarMessage('Opening Settings', 5000);
+									vscode.commands.executeCommand('workbench.action.openSettings2');
+									vscode.window.showInformationMessage('Search for "MSK sfdx Toolbox".');
+								} else {
+									vscode.window.setStatusBarMessage('Opening working directory', 5000);
+									vscode.commands.executeCommand('vscode.openFolder', Uri.file(utils.getPath() + '/'), true);
+								}
+							});
+						}
 					}
 				}
 

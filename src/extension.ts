@@ -18,7 +18,8 @@ export function activate(context: vscode.ExtensionContext) {
 	console.log('Activated extension "msk-sfdx-toolbox".');
 
 	/* Compares permissions between Permission Sets or Profiles. */
-	context.subscriptions.push(vscode.commands.registerCommand('msk.comparePermissions', comparePermissions));
+	// context.subscriptions.push(vscode.commands.registerCommand('msk.comparePermissions', comparePermissions));
+	context.subscriptions.push(vscode.commands.registerCommand('msk.comparePermissions', function execute() { comparePermissions(context); }));
 
 	/* Opens a Scratch Org or Dev Hub without setting it as default. */
 	context.subscriptions.push(vscode.commands.registerCommand('msk.openScratchOrg', function execute() { listAllOrgs(OrgType.ScratchDev, Operation.Open, context); }));

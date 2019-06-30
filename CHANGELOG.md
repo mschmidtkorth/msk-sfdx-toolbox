@@ -67,3 +67,9 @@ Feature-completion.
 
 - Context menu entries for **>MSK: Open Current File In Org** and **>MSK: Compare Permissions** when right-clicking a file
 - View button/icon for **>MSK: Open Current File In Org** when opening a file (top right)
+
+## 1.1.0
+
+### Added
+
+- Bundled `mergeProfileOrPermSet.sh` with extension
