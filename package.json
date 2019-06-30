@@ -7,7 +7,7 @@
 		"name": "Michael Schmidt-Korth",
 		"email": "mschmidtkorth@salesforce.com"
 	},
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"preview": false,
 	"icon": "images/salesforceDX.png",
 	"galleryBanner": {
@@ -66,7 +66,11 @@
 			}, {
 				"command": "msk.openFileInOrg",
 				"title": "Open Current File in Org",
-				"category": "MSK"
+				"category": "MSK",
+				"icon": {
+					"light": "./src/media/openFileInSalesforceLight.svg",
+					"dark": "./src/media/openFileInSalesforceDark.svg"
+				}
 			}
 		],
 		"keybindings": [{
@@ -97,11 +101,6 @@
 					"type": "string",
 					"default": null,
 					"description": "The directory that contains the mergeProfileOrPermSet shell script."
-				},
-				"msk.validationScratchOrg": {
-					"type": "string",
-					"default": null,
-					"description": "The username or alias of the Scratch Org to use for validation deployments."
 				}
 			}
 		},
@@ -109,11 +108,25 @@
 			"editor/context": [{
 				"command": "msk.comparePermissions",
 				"group": "3_compare",
-				"when": "resourceExtname == .xml"
+				"when": "resourceFilename =~ /.*(permissionset|profile)-meta\\.xml$/"
 			}, {
 				"command": "msk.openFileInOrg",
 				"group": "3_compare",
-				"when": "resourceExtname == .xml"
+				"when": "resourceFilename =~ /.*(-meta\\.xml|\\.cls)$/"
+			}],
+			"explorer/context": [{
+				"command": "msk.comparePermissions",
+				"group": "3_compare",
+				"when": "resourceFilename =~ /.*(permissionset|profile)-meta\\.xml$/"
+			}, {
+				"command": "msk.openFileInOrg",
+				"group": "3_compare",
+				"when": "resourceFilename =~ /.*(-meta\\.xml|\\.cls)$/"
+			}],
+			"editor/title": [{
+				"command": "msk.openFileInOrg",
+				"group": "navigation",
+				"when": "resourceFilename =~ /.*(-meta\\.xml|\\.cls)$/"
 			}]
 		}
 	},

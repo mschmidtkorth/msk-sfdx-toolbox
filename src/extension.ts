@@ -6,7 +6,7 @@ import { openFileInOrg } from './command/helper/openFileInOrg'; // Import sub-mo
 // import { promisify } from 'util'; // Allows to use note-util's promise function with async/await to get shell commands which read immediately.
 // import { OrgExplorer } from './orgExplorer';
 
-export declare var globalContext: vscode.ExtensionContext; // Export the context as we cannot pass it as an argument
+// export declare var globalContext: vscode.ExtensionContext; // Export the context as we cannot pass it as an argument
 
 /**
  * This method is called when the extension is activated.
@@ -31,11 +31,12 @@ export function activate(context: vscode.ExtensionContext) {
 
 	/* Shows currently opened file in browser / org. */
 	context.subscriptions.push(vscode.commands.registerCommand('msk.openFileInOrg',
-		function execute() {
+		function execute(uri: vscode.Uri) {
 			if (vscode.window.activeTextEditor === undefined) { // TODO Does not yet check for valid file extension.
 				vscode.window.showErrorMessage('Please open any XML file first.');
 			} else {
-				listAllOrgs(OrgType.ScratchDev, Operation.OpenFile, context, vscode.window.activeTextEditor.document.fileName);
+				let path: string = (uri.fsPath !== undefined) ? uri.fsPath : vscode.window.activeTextEditor.document.fileName;
+				listAllOrgs(OrgType.ScratchDev, Operation.OpenFile, context, path);
 			}
 		}
 	));

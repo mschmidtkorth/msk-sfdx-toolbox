@@ -14,6 +14,11 @@ export function validateChanges(orgName: string) {
 	const cp = require('child_process');
 
 	// TODO Pre-select org from setting default. Requires use of createQuickPick() instead of showQuickPick(). To implement, move the following to extension.ts:
+	/* "msk.validationScratchOrg": {
+					"type": "string",
+					"default": null,
+					"description": "The username or alias of the Scratch Org to use for validation deployments."
+				} */
 	// username = (typeof vscode.workspace.getConfiguration('msk').get('validationScratchOrg') != 'undefined') ? vscode.workspace.getConfiguration('msk').get('validationScratchOrg') : 'VALIDATE';
 	// ... and pass username as an argument to listOrgs.
 	let username = orgName;
