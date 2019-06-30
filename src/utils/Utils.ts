@@ -1,7 +1,7 @@
 import * as vscode from 'vscode'; // VS Code Extension API
 const path = require('path');
 const fs = require('fs');
-const md5 = require('ts-md5/dist/md5');
+const { Md5 } = require('ts-md5/dist/md5');
 const os = require('os');
 
 /**
@@ -23,6 +23,16 @@ export default class Utils {
 		}
 
 		return path.substring((forwardSlash > backSlash) ? forwardSlash + 1 : backSlash + 1);
+	}
+
+	/**
+	 * Extract folder name from path.
+     * @param path - Path to a file.
+     * @returns `string` Name of folder.
+	 * @author Michael Schmidt-Korth mschmidtkorth(at)salesforce.com
+	 */
+	getFolderName(pathUri: string): string {
+		return path.dirname(pathUri).split("/").slice(-1)[0];
 	}
 
 	/**
@@ -78,7 +88,7 @@ export default class Utils {
 			}
 
 			// Hash the list of files
-			mskCache.put('orgListHash', md5.hashStr(cleanedFiles.toString()));
+			mskCache.put('orgListHash', Md5.hashStr(cleanedFiles.toString()));
 
 			let currentHash = mskCache.get('orgListHash');
 

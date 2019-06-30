@@ -7,7 +7,7 @@
 		"name": "Michael Schmidt-Korth",
 		"email": "mschmidtkorth@salesforce.com"
 	},
-	"version": "1.0.0",
+	"version": "1.0.2",
 	"preview": false,
 	"icon": "images/salesforceDX.png",
 	"galleryBanner": {
@@ -39,13 +39,13 @@
 		"onCommand:msk.validateChanges",
 		"onCommand:msk.deleteScratchOrg",
 		"onCommand:msk.openScratchOrg",
+		"onCommand:msk.openFileInOrg",
 		"onView:orgExplorer",
 		"onLanguage:apex"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
-		"commands": [
-			{
+		"commands": [{
 				"command": "msk.comparePermissions",
 				"title": "Compare Permissions",
 				"category": "MSK"
@@ -59,15 +59,17 @@
 				"command": "msk.deleteScratchOrg",
 				"title": "Delete Scratch Org",
 				"category": "MSK"
-			},
-			{
+			}, {
 				"command": "msk.validateChanges",
 				"title": "Validate Changes",
 				"category": "MSK"
+			}, {
+				"command": "msk.openFileInOrg",
+				"title": "Open Current File in Org",
+				"category": "MSK"
 			}
 		],
-		"keybindings": [
-			{
+		"keybindings": [{
 				"command": "msk.comparePermissions",
 				"key": "cmd+shift+s p",
 				"mac": "cmd+shift+s p",
@@ -104,13 +106,15 @@
 			}
 		},
 		"menus": {
-			"editor/context": [
-				{
-					"command": "msk.comparePermissions",
-					"group": "3_compare",
-					"when": "resourceExtname == .xml"
-				}
-			]
+			"editor/context": [{
+				"command": "msk.comparePermissions",
+				"group": "3_compare",
+				"when": "resourceExtname == .xml"
+			}, {
+				"command": "msk.openFileInOrg",
+				"group": "3_compare",
+				"when": "resourceExtname == .xml"
+			}]
 		}
 	},
 	"scripts": {

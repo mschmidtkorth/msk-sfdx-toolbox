@@ -1,0 +1,102 @@
+{
+	"cls": {
+		"link": "lightning/setup/ApexClasses/page?address=%2F{%id}",
+		"object": "ApexClass",
+		"field": "Name"
+	},
+	"compactLayout": {
+		"link": "lightning/setup/ObjectManager/Event/CompactLayouts/{%id}/view",
+		"object": "CompactLayout",
+		"field": "DeveloperName",
+		"api": "tooling"
+	},
+	"delegateGroup": {
+		"link": "lightning/setup/DelegateGroups/home"
+	},
+	"field": {
+		"link": "lightning/setup/ObjectManager/{%obj}/FieldsAndRelationships/{%id}/view",
+		"object": "CustomField",
+		"queryAddition": "TableEnumOrId = '{%obj}' AND DeveloperName = '{%name}'",
+		"api": "tooling"
+	},
+	"flexipage": {
+		"link": "{%s}"
+	},
+	"flow": {
+		"link": "/builder_platform_interaction/flowBuilder.app?flowId={%id}&isdtp=p1",
+		"object": "Flow",
+		"queryAddition": "DefinitionId IN (SELECT Id FROM FlowDefinition WHERE DeveloperName = '{%name}')",
+		"api": "tooling"
+	},
+	"globalValueSet": {
+		"link": "lightning/setup/Picklists/page?address=%2F{%id}",
+		"object": "GlobalValueSet",
+		"field": "DeveloperName",
+		"api": "tooling"
+	},
+	"labels": {
+		"link": "lightning/setup/ExternalStrings/home"
+	},
+	"layout": {
+		"link": "lightning/setup/ObjectManager/Account/PageLayouts/{%id}/view",
+		"object": "Layout",
+		"queryAddition": "EntityDefinitionId = '{%obj}' AND Name = '{%name}'",
+		"api": "tooling"
+	},
+	"listView": {
+		"link": "lightning/o/{%obj}/list?filterName={%id}",
+		"object": "ListView",
+		"queryAddition": "SobjectType = '{%obj}' AND DeveloperName = '{%name}'"
+	},
+	"md": {
+		"link": "lightning/setup/CustomMetadata/home"
+	},
+	"object": {
+		"link": "lightning/setup/ObjectManager/{%s}/Details/view"
+	},
+	"profile": {
+		"link": "lightning/setup/EnhancedProfiles/page?address=%2F{%id}",
+		"object": "Profile",
+		"field": "Name",
+		"exceptions": [{
+			"Admin": "System Administrator"
+		}]
+	},
+	"permissionset": {
+		"link": "lightning/setup/PermSets/page?address=%2F{%id}%3FretURL%3D%252Fsetup%252Fhome",
+		"object": "PermissionSet",
+		"field": "Name"
+	},
+	"quickAction": {
+		"link": "lightning/setup/ObjectManager/{%obj}/ButtonsLinksActions/{%id}/view",
+		"object": "QuickActionDefinition",
+		"queryAddition": "SobjectType = '{%obj}' AND DeveloperName = '{%name}'",
+		"selectAddition": "SobjectType",
+		"api": "tooling"
+	},
+	"recordType": {
+		"link": "lightning/setup/ObjectManager/{%obj}/RecordTypes/{%id}/view",
+		"object": "RecordType",
+		"queryAddition": "SobjectType = '{%obj}' AND DeveloperName = '{%name}'"
+	},
+	"role": {
+		"link": "lightning/setup/Roles/page?address=%2F{%id}%3Fsetupid%3DRoles",
+		"object": "UserRole",
+		"field": "DeveloperName"
+	},
+	"tab": {
+		"link": "lightning/setup/CustomTabs/page?address=%2F{%id}%3Fsetupid%3DCustomTabs",
+		"object": "TabDefinition",
+		"field": "SobjectName",
+		"selectAddition": "DurableId"
+	},
+	"validationRule": {
+		"link": "lightning/setup/ObjectManager/{%obj}/ValidationRules/{%id}/view",
+		"object": "ValidationRule",
+		"queryAddition": "EntityDefinitionId = '{%obj}' AND ValidationName = '{%name}'",
+		"api": "tooling"
+	},
+	"workflow": {
+		"link": "lightning/setup/WorkflowRules/page?address=%2F01Q&nodeId=WorkflowRules"
+	}
+}

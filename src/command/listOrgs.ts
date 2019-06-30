@@ -6,19 +6,20 @@ const Cache = require('vscode-cache');
 import Utils from '../utils/utils';
 import { validateChanges } from './validateChanges';
 import { openOrg } from './helper/openOrg';
+import { openFileInOrg } from './helper/openFileInOrg';
 import { deleteOrg } from './helper/deleteOrg';
 
 export enum OrgType { Scratch = 'Scratch Orgs', DevHub = 'Dev Hubs', ScratchDev = 'Scratch Orgs and Dev Hubs' }
-export enum Operation { Open, Delete, Validate }
+export enum Operation { Open, Delete, Validate, OpenFile }
 
 /**
  * Provides a QuickPick with all available Scratch Org and Dev Hub instances incl. their expiration date.
  * @param type - Type of org to show - `Scratch | DevHub | ScratchDev`.
- * @param operation - Operation to perform on org list - `Open | Validate | Delete`.
+ * @param operation - Operation to perform on org list - `Open | Validate | Delete | OpenFile`.
  * @param context - The extenion's context.
  * @author Michael Schmidt-Korth mschmidtkorth(at)salesforce.com
  */
-export function listAllOrgs(type: OrgType, operation: Operation, context: vscode.ExtensionContext) {
+export function listAllOrgs(type: OrgType, operation: Operation, context: vscode.ExtensionContext, filePath?: string) {
 	var utils = new Utils();
 
 	vscode.window.setStatusBarMessage('Loading all ' + type.valueOf() + '...', 5000);
@@ -130,6 +131,9 @@ export function listAllOrgs(type: OrgType, operation: Operation, context: vscode
 				} else if (operation === Operation.Validate) {
 					vscode.window.setStatusBarMessage('Validating against org ' + orgName + '...', 5000);
 					validateChanges(orgName);
+				} else if (operation === Operation.OpenFile && filePath !== undefined) {
+					vscode.window.setStatusBarMessage('Opening file in org ' + orgName + '...', 5000);
+					openFileInOrg(orgName, filePath, context);
 				} else {
 					vscode.window.setStatusBarMessage('Opening org ' + orgName + '...', 5000);
 					openOrg(orgName);
