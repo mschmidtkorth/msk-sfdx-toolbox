@@ -3,9 +3,6 @@ import { ProgressLocation } from 'vscode';
 import cp = require('child_process'); // Provides exec()
 import { exists } from 'fs';
 import Utils from '../../utils/utils';
-import { doesNotReject } from 'assert';
-const fs = require('fs');
-const path = require('path');
 
 /**
  * Shows the currently opened file in the browser / org.
