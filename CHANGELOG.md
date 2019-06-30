@@ -6,13 +6,13 @@
 
 ### Added
 
-- Support for comparing permissions
+- New command **>MSK: Compare Permissions**: Support for comparing permissions
 
 ## 0.0.2
 
 ### Added
 
-- Support for opening Scratch Orgs
+- New command **>MSK: Open Org**: Support for opening Scratch Orgs
 - Setting to define default working directory
 
 ## 0.0.3
@@ -31,8 +31,8 @@
 
 ### Added
 
-- Support for deleting a Scratch Org (instead of opening it)
-- Support for validating a deployment against a Scratch Org
+- New command **>MSK: Delete Scratch Org**: Support for deleting a Scratch Org (instead of opening it)
+- New command **>MSK: Validate Changes**: Support for validating a deployment against a Scratch Org
 
 ## 0.0.5
 
@@ -54,3 +54,9 @@ Feature-completion.
 
 - Improved user notifications
 - Code cleanup
+
+## 1.0.2
+
+### Added
+
+- New command **>MSK: Open Current File In Org**: Support for showing the current file in your Salesforce org
