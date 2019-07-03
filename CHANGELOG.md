@@ -73,3 +73,9 @@ Feature-completion.
 ### Added
 
 - Bundled `mergeProfileOrPermSet.sh` with extension
+
+## 1.1.2
+
+### Modified
+
+- Replaced `mergeProfileOrPermSet.sh` with `mergeProfileOrPermSet.js` to make it OS-agnostic
