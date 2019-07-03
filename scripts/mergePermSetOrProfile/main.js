@@ -6,8 +6,8 @@
  * Usage:
  *      node permSetMain.js PATH_TO_SOURCE_PERM_SET PATH_TO_DEST_PERM_SET
  */
-const utils = require("../commons/fs-utils.js");
-const sfdcMergers = require("./mergers.js");
+const utils = require('../commons/fs-utils.js');
+const GenericMerger = require('./mergers/GenericMerger');
 
 /**
  * Executes the logic to merge two permission sets. All permissions from
@@ -19,33 +19,16 @@ const sfdcMergers = require("./mergers.js");
 async function run(theirsPath, oursPath) {
   let theirsJson = await utils.readXmlFileAndConvertToJson(theirsPath);
   let oursJson = await utils.readXmlFileAndConvertToJson(oursPath);
-  let merger;
 
-  if (
-    theirsJson.hasOwnProperty("PermissionSet") &&
-    oursJson.hasOwnProperty("PermissionSet")
-  ) {
-    // both files are permission set
-    merger = new sfdcMergers.PermissionSetMerger(theirsJson, oursJson);
-  } else if (
-    theirsJson.hasOwnProperty("Profile") &&
-    oursJson.hasOwnProperty("Profile")
-  ) {
-    // both files are profile
-    merger = new sfdcMergers.ProfileMerger(theirsJson, oursJson);
-  } else {
-    throw new Error(
-      "Files must of of same type! Valid types are Profile or Permission Set"
-    );
-  }
+  let merger = new GenericMerger(theirsJson, oursJson);
 
   if (merger.mergeTheirsIntoOurs()) {
     // conflicts!
     console.log(
-      "WARNING: There are some merge conflicts. Before pushing solve them."
+      'WARNING: There are some merge conflicts. Before pushing solve them.'
     );
   } else {
-    console.log("SUCCESS: permission sets merged successfully.");
+    console.log('SUCCESS: permission sets merged successfully.');
   }
 
   oursJson = merger.getMergeResult();
@@ -55,7 +38,7 @@ async function run(theirsPath, oursPath) {
 
 // checks input parameters
 if (process.argv.length < 4) {
-  throw new Error("You have to specify a Source file and a Target file");
+  throw new Error('You have to specify a Source file and a Target file');
 }
 
 run(process.argv[2], process.argv[3]);
