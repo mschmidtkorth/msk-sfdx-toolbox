@@ -28,7 +28,7 @@ export default class MergeProfileOrPermSet {
               currentBranch = res.current;
               done();
             } else {
-              done.fail(`ERROR: ${branch} is not a valid branch`);
+              done.fail(`ERROR: ${branch} is not a valid branch.`);
             }
           });
         })
@@ -40,7 +40,7 @@ export default class MergeProfileOrPermSet {
               done();
             } else {
               done.fail(
-                "ERROR:  your workspace contains changes that haven't been committed"
+                "ERROR: Your workspace contains changes that have not been committed."
               );
             }
           });
