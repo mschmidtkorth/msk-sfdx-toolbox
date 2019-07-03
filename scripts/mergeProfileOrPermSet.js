@@ -61,7 +61,9 @@ async function run(branch, filePath) {
       })
       .then(function copyFileInTmpDirectory(done) {
         const fileName = path.basename(filePath);
-        fs.mkdirSync(TMP_DIR);
+        if (!fs.existsSync(TMP_DIR)) {
+          fs.mkdirSync(TMP_DIR);
+        }
         fs.copyFileSync(filePath, path.join(TMP_DIR, fileName));
         done();
       })
