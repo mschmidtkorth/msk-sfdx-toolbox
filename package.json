@@ -7,7 +7,7 @@
 		"name": "Michael Schmidt-Korth",
 		"email": "mschmidtkorth@salesforce.com"
 	},
-	"version": "1.1.2",
+	"version": "1.1.3",
 	"preview": false,
 	"icon": "images/salesforceDX.png",
 	"galleryBanner": {
@@ -50,8 +50,7 @@
 	],
 	"main": "./out/extension.js",
 	"contributes": {
-		"commands": [
-			{
+		"commands": [{
 				"command": "msk.comparePermissions",
 				"title": "Compare Permissions",
 				"category": "MSK"
@@ -81,8 +80,7 @@
 				}
 			}
 		],
-		"keybindings": [
-			{
+		"keybindings": [{
 				"command": "msk.comparePermissions",
 				"key": "cmd+shift+s p",
 				"mac": "cmd+shift+s p",
@@ -114,8 +112,7 @@
 			}
 		},
 		"menus": {
-			"editor/context": [
-				{
+			"editor/context": [{
 					"command": "msk.comparePermissions",
 					"group": "3_compare",
 					"when": "resourceFilename =~ /.*(permissionset|profile)-meta\\.xml$/"
@@ -126,8 +123,7 @@
 					"when": "resourceFilename =~ /.*(-meta\\.xml|\\.cls)$/"
 				}
 			],
-			"explorer/context": [
-				{
+			"explorer/context": [{
 					"command": "msk.comparePermissions",
 					"group": "3_compare",
 					"when": "resourceFilename =~ /.*(permissionset|profile)-meta\\.xml$/"
@@ -138,13 +134,11 @@
 					"when": "resourceFilename =~ /.*(-meta\\.xml|\\.cls)$/"
 				}
 			],
-			"editor/title": [
-				{
-					"command": "msk.openFileInOrg",
-					"group": "navigation",
-					"when": "resourceFilename =~ /.*(-meta\\.xml|\\.cls)$/"
-				}
-			]
+			"editor/title": [{
+				"command": "msk.openFileInOrg",
+				"group": "navigation",
+				"when": "resourceFilename =~ /.*(-meta\\.xml|\\.cls)$/"
+			}]
 		}
 	},
 	"scripts": {

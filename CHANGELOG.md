@@ -74,7 +74,7 @@ Feature-completion.
 
 - Bundled `mergeProfileOrPermSet.sh` with extension
 
-## 1.1.2
+## 1.1.3
 
 ### Modified
 

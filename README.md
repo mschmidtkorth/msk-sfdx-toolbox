@@ -35,11 +35,11 @@ Calling out known issues can help limit users opening duplicate issues against y
 5. **>MSK: Open Current File In Org** and **>MSK: Compare Permissions** can also be executed via the right-click context menu for any open file, directly from the editors action buttons or from the file explorer.
 
 ### Comparing Permissions
-Permission files (Profiles or Permission Sets) can be compareda against their current version on your master branch to highlight conflicts.
+Permission files (Profiles or Permission Sets) can be compared against their current version on your master branch to highlight conflicts.
 1. Check out your `master` branch (to compare changes against) and ensure it is up-to-date (as you want to compare against the most recent version).
 2. Check out your `feature`/`development` branch (to compare changes from).
 3. Use **>MSK: Compare Permissions** to select the Profile or Permission Set.
-4. Receive a success message if merging was without conflicts or check the conflict file.
+4. Receive a success message if merging concluded without conflicts or check the conflict file.
 
 ## Requirements
 
