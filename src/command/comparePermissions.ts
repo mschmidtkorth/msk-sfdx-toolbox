@@ -3,8 +3,8 @@ import { window, workspace, commands, ExtensionContext, QuickPick, QuickInputBut
 import cp = require('child_process'); // Provides exec()
 import { exists } from 'fs';
 import Utils from '../utils/utils';
+import MergeProfileOrPermSet from '../utils/MergeProfileOrPermSet';
 const fs = require('fs');
-const mergeProfileOrPermSet = require('../utils/mergeProfileOrPermSet.js');
 
 /**
  * Compares the local version of a Permission Set/Profile in a branch with the local version of the same in the master branch.
@@ -35,10 +35,11 @@ export function comparePermissions(context: vscode.ExtensionContext) {
 				vscode.window.setStatusBarMessage('Checking conflicts for ' + returnValue.label + ' ...', 5000);
 
 				console.log('Executing mergeProfileOrPermSet.js for ' + filePath);
+				console.log('workspace.rootPath', workspace.rootPath);
 
-				mergeProfileOrPermSet.run("master", filePath)
+				new MergeProfileOrPermSet(workspace.rootPath).run("master", filePath)
 					.then(res => {
-						if (res) {
+						if (!res.conflicts) {
 							vscode.window.showInformationMessage('SUCCESS: files were merged correctly', 'Open file').then(button => {
 								vscode.window.setStatusBarMessage('Opened file', 5000);
 								workspace.openTextDocument(filePath).then(d => {
