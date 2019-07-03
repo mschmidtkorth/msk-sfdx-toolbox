@@ -3,3 +3,4 @@
 out/
 node_modules/
 src/OrgExplorer.ts
+tmp/

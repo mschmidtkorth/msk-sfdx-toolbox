@@ -96,9 +96,10 @@ async function run(branch, filePath) {
 
         await utils.convertJsonToXmlAndWriteToFile(oursJson, filePath);
 
-        done();
+        done(theirsPath);
       })
-      .then(function removeTmpDir(done) {
+      .then(function removeTmpDir(done, theirsPath) {
+        fs.unlinkSync(theirsPath);
         fs.rmdirSync(TMP_DIR);
         done();
       })
