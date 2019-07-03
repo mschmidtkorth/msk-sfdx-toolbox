@@ -32,7 +32,12 @@
 	"keywords": [
 		"MSK",
 		"SFDX",
-		"Salesforce DX"
+		"Salesforce DX",
+		"Scratch Org",
+		"Sandbox",
+		"Metadata",
+		"Deployment",
+		"Validation"
 	],
 	"activationEvents": [
 		"onCommand:msk.comparePermissions",
@@ -100,7 +105,7 @@
 				"msk.defaultCompareScriptDirectory": {
 					"type": "string",
 					"default": null,
-					"description": "The directory that contains the mergeProfileOrPermSet shell script."
+					"description": "(optional) The directory that contains your version of the mergeProfileOrPermSet shell script. If not specified the default version is used."
 				}
 			}
 		},
