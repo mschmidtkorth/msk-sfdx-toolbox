@@ -104,6 +104,11 @@ async function run(branch, filePath) {
         done();
       })
       .or(function(err) {
+        // goes back on current branch
+        if (currentBranch) {
+          simpleGit.checkout(currentBranch);
+        }
+        
         if (typeof err === 'string') {
           reject(new Error(err));
         } else {
