@@ -4,10 +4,11 @@ import cp = require('child_process'); // Provides exec()
 import { exists } from 'fs';
 import Utils from '../utils/utils';
 const fs = require('fs');
+const mergeProfileOrPermSet = require('../utils/mergeProfileOrPermSet.js');
 
 /**
  * Compares the local version of a Permission Set/Profile in a branch with the local version of the same in the master branch.
- * @remarks Uses Marco Zeuli's `mergeProfileOrPermSet.sh` script to compare permissions.
+ * @remarks Uses Marco Zeuli's `mergeProfileOrPermSet.js` script to compare permissions.
  * @author Michael Schmidt-Korth mschmidtkorth(at)salesforce.com
  */
 export function comparePermissions(context: vscode.ExtensionContext) {
@@ -33,98 +34,42 @@ export function comparePermissions(context: vscode.ExtensionContext) {
 				const filePath = returnValue.filePath;
 				vscode.window.setStatusBarMessage('Checking conflicts for ' + returnValue.label + ' ...', 5000);
 
-				console.log('Executing mergeProfileOrPermSet.sh for ' + filePath);
+				console.log('Executing mergeProfileOrPermSet.js for ' + filePath);
 
-				let compareScriptPath;
-				// Determine the path to the mergeProfileOrPermSet.sh script. Check configuration first. If it fails, attempt to use the user-specified directory. If it fails, attempt to use the relative path to the working directory. If it fails, attempt to use the extension directory. This allows the user to use a newer/different version of the script than bundled with the extension.
-				try {
-					compareScriptPath = vscode.workspace.getConfiguration('msk').get('defaultCompareScriptDirectory') + '/mergeProfileOrPermSet.sh';
-					fs.accessSync(compareScriptPath + '/mergeProfileOrPermSet.sh'); // Continues if no error, throws exception if error
-				} catch (e) {
-					console.warn('mergeProfileOrPermSet.sh not found at user-specified directory "' + compareScriptPath + '". Checking directory relative to working dir.');
-					try {
-						compareScriptPath = utils.getPath() + '/utils/mergeProfileOrPermSet.sh';
-						fs.accessSync(utils.getPath() + '/utils/mergeProfileOrPermSet.sh');
-					} catch (e) {
-						console.warn('mergeProfileOrPermSet.sh not found at "' + compareScriptPath + '". Attempting to receive it from extension');
-						try {
-							console.log('Checking extension at ' + context.extensionPath + '/scripts/mergeProfileOrPermSet.sh');
-							compareScriptPath = context.extensionPath + '/scripts/mergeProfileOrPermSet.sh';
-							fs.accessSync(context.extensionPath + '/scripts/mergeProfileOrPermSet.sh');
-						} catch (e) {
-							console.error('Unable to locate mergeProfileOrPermSet.sh');
-							vscode.window.showErrorMessage('mergeProfileOrPermSet.sh not found. Please check your working directory or update your default directory. Stopping.', 'Open working directory', 'Open Settings').then(button => {
-								if (button === 'Open Settings') {
-									vscode.window.setStatusBarMessage('Opening Settings', 5000);
-									vscode.commands.executeCommand('workbench.action.openSettings2');
-									vscode.window.showInformationMessage('Search for "MSK sfdx Toolbox".');
-								} else {
-									vscode.window.setStatusBarMessage('Opening working directory', 5000);
-									vscode.commands.executeCommand('vscode.openFolder', Uri.file(utils.getPath() + '/'), true);
-								}
+				mergeProfileOrPermSet.run("master", filePath)
+					.then(res => {
+						if (res) {
+							vscode.window.showInformationMessage('SUCCESS: files were merged correctly', 'Open file').then(button => {
+								vscode.window.setStatusBarMessage('Opened file', 5000);
+								workspace.openTextDocument(filePath).then(d => {
+									window.showTextDocument(d);
+								});
+							});
+						} else {
+							vscode.window.showWarningMessage('WARNING: There are some merge conflicts. Before pushing solve them', 'Open file').then(button => {
+								vscode.window.setStatusBarMessage('Opened file', 5000);
+								workspace.openTextDocument(filePath).then(d => {
+									window.showTextDocument(d);
+								});
 							});
 						}
-					}
-				}
-
-				cp.exec( // No progress indicator as command executes quickly
-					'bash "' + compareScriptPath + '" master ' + '"' + filePath + '"',
-					{ cwd: utils.getPath() },
-					function (error: any, output: any) { // Beware: Always returned in this sequence, do not use output,error
-						processFile(output, error, filePath);
+						
+						workspace.openTextDocument(filePath).then(d => {
+							window.showTextDocument(d);
+						});
+					}).catch(err => {
+						vscode.window.showErrorMessage(err.message, 'Discard uncommitted files', 'Show modified files').then(button => {
+							vscode.window.setStatusBarMessage('Discard uncommitted files', 5000);
+							if (button === 'Discard uncommitted files') {
+								vscode.commands.executeCommand('git.cleanAll');
+							} else {
+								vscode.commands.executeCommand('workbench.view.scm');
+							}
+						});
 					});
 			}
 		});
 
-		/**
-		 * Processes the result file of `mergeProfileOrPermSet.sh`.
-		 * @param output - Output of the script.
-		 * @param error - Error of the script.
-		 * @param file - Processed permission file.
-		 * @author Michael Schmidt-Korth mschmidtkorth(at)salesforce.com
-		 */
-		function processFile(output: string, error: string, filePath: string) {
-			// Even if mergeProfileOrPermSet.sh executes successfully (0), it may still throw an exception explicitly - however, in Marco's code he does not throw a failure but simply outputs 'Error: ', therefore we should also recognize such outputs as errors.
-			if (output && output.substr(0, 5) !== 'Error' && output.substr(0, 7) !== 'WARNING') {
-				console.log('Command has finished:' + output);
-				vscode.window.showInformationMessage(output, 'Open file').then(button => {
-					vscode.window.setStatusBarMessage('Opened file', 5000);
-					workspace.openTextDocument(filePath).then(d => {
-						window.showTextDocument(d);
-					});
-				});
-
-				workspace.openTextDocument(filePath).then(d => {
-					window.showTextDocument(d);
-				});
-			} else if (output.substr(0, 7) === 'WARNING') {
-				// e.g.  WARNING: There are some merge conflicts. Before pushing solve them.
-				console.log('Warning executing command:' + output);
-				vscode.window.showWarningMessage(output, 'Open file').then(button => {
-					vscode.window.setStatusBarMessage('Opened file', 5000);
-					workspace.openTextDocument(filePath).then(d => {
-						window.showTextDocument(d);
-					});
-				});
-
-				workspace.openTextDocument(filePath).then(d => {
-					window.showTextDocument(d);
-				});
-			} else if (output.substr(0, 5) === 'Error') {
-				// e.g.  Error: your workspace contains changes that haven't been committed
-				console.log('Soft error executing command:' + output);
-				vscode.window.showErrorMessage(output, 'Discard uncommitted files', 'Show modified files').then(button => {
-					vscode.window.setStatusBarMessage('Discard uncommitted files', 5000);
-					if (button === 'Discard uncommitted files') {
-						vscode.commands.executeCommand('git.cleanAll');
-					} else {
-						vscode.commands.executeCommand('workbench.view.scm');
-					}
-				});
-			} else {
-				console.error('Hard error executing command:' + error);
-				vscode.window.showErrorMessage(error, 'OK');
-			}
-		}
+		
 	});
 }

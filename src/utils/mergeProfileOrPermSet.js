@@ -1,14 +1,13 @@
 const fs = require('fs');
 const path = require('path');
 const ASQ = require('asynquence');
-const utils = require('./commons/fs-utils');
-const GenericMerger = require('./mergePermSetOrProfile/mergers/GenericMerger');
 const simpleGit = require('simple-git')('./'); // assumes current workspace is a GIT repo
+const utils = require('../../scripts/commons/fs-utils');
+const GenericMerger = require('../../scripts/mergePermSetOrProfile/mergers/GenericMerger');
 
 const TMP_DIR = 'tmp';
 
 module.exports = function run(branch, filePath) {
-
   return new Promise((resolve, reject) => {
     let currentBranch = '';
     let mergeResult;
@@ -109,7 +108,5 @@ module.exports = function run(branch, filePath) {
           reject(err);
         }
       });
-  }).catch(err => {
-    throw err;
   });
 };
