@@ -57,7 +57,7 @@ export function comparePermissions(context: vscode.ExtensionContext) {
 						workspace.openTextDocument(filePath).then(d => {
 							window.showTextDocument(d);
 						});
-					}).catch(err => {
+					}).catch(err => { // via done.fail()
 						vscode.window.showErrorMessage(err.message, 'Discard uncommitted files', 'Show modified files').then(button => {
 							vscode.window.setStatusBarMessage('Discard uncommitted files', 5000);
 							if (button === 'Discard uncommitted files') {
