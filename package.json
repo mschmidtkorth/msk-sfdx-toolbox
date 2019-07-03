@@ -45,7 +45,8 @@
 	],
 	"main": "./out/extension.js",
 	"contributes": {
-		"commands": [{
+		"commands": [
+			{
 				"command": "msk.comparePermissions",
 				"title": "Compare Permissions",
 				"category": "MSK"
@@ -59,11 +60,13 @@
 				"command": "msk.deleteScratchOrg",
 				"title": "Delete Scratch Org",
 				"category": "MSK"
-			}, {
+			},
+			{
 				"command": "msk.validateChanges",
 				"title": "Validate Changes",
 				"category": "MSK"
-			}, {
+			},
+			{
 				"command": "msk.openFileInOrg",
 				"title": "Open Current File in Org",
 				"category": "MSK",
@@ -73,7 +76,8 @@
 				}
 			}
 		],
-		"keybindings": [{
+		"keybindings": [
+			{
 				"command": "msk.comparePermissions",
 				"key": "cmd+shift+s p",
 				"mac": "cmd+shift+s p",
@@ -105,29 +109,37 @@
 			}
 		},
 		"menus": {
-			"editor/context": [{
-				"command": "msk.comparePermissions",
-				"group": "3_compare",
-				"when": "resourceFilename =~ /.*(permissionset|profile)-meta\\.xml$/"
-			}, {
-				"command": "msk.openFileInOrg",
-				"group": "3_compare",
-				"when": "resourceFilename =~ /.*(-meta\\.xml|\\.cls)$/"
-			}],
-			"explorer/context": [{
-				"command": "msk.comparePermissions",
-				"group": "3_compare",
-				"when": "resourceFilename =~ /.*(permissionset|profile)-meta\\.xml$/"
-			}, {
-				"command": "msk.openFileInOrg",
-				"group": "3_compare",
-				"when": "resourceFilename =~ /.*(-meta\\.xml|\\.cls)$/"
-			}],
-			"editor/title": [{
-				"command": "msk.openFileInOrg",
-				"group": "navigation",
-				"when": "resourceFilename =~ /.*(-meta\\.xml|\\.cls)$/"
-			}]
+			"editor/context": [
+				{
+					"command": "msk.comparePermissions",
+					"group": "3_compare",
+					"when": "resourceFilename =~ /.*(permissionset|profile)-meta\\.xml$/"
+				},
+				{
+					"command": "msk.openFileInOrg",
+					"group": "3_compare",
+					"when": "resourceFilename =~ /.*(-meta\\.xml|\\.cls)$/"
+				}
+			],
+			"explorer/context": [
+				{
+					"command": "msk.comparePermissions",
+					"group": "3_compare",
+					"when": "resourceFilename =~ /.*(permissionset|profile)-meta\\.xml$/"
+				},
+				{
+					"command": "msk.openFileInOrg",
+					"group": "3_compare",
+					"when": "resourceFilename =~ /.*(-meta\\.xml|\\.cls)$/"
+				}
+			],
+			"editor/title": [
+				{
+					"command": "msk.openFileInOrg",
+					"group": "navigation",
+					"when": "resourceFilename =~ /.*(-meta\\.xml|\\.cls)$/"
+				}
+			]
 		}
 	},
 	"scripts": {
@@ -152,6 +164,7 @@
 		"fs-extra": "^8.0.1",
 		"ts-md5": "^1.2.4",
 		"typescript": "^3.3.1",
-		"vscode-cache": "^0.3.0"
+		"vscode-cache": "^0.3.0",
+		"xml2js": "^0.4.19"
 	}
 }
