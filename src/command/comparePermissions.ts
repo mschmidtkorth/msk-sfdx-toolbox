@@ -35,26 +35,25 @@ export function comparePermissions(context: vscode.ExtensionContext) {
 				vscode.window.setStatusBarMessage('Checking conflicts for ' + returnValue.label + ' ...', 5000);
 
 				console.log('Executing mergeProfileOrPermSet.js for ' + filePath);
-				console.log('workspace.rootPath', workspace.rootPath);
 
 				new MergeProfileOrPermSet(workspace.rootPath).run("master", filePath)
 					.then(res => {
 						if (!res.conflicts) {
-							vscode.window.showInformationMessage('SUCCESS: files were merged correctly', 'Open file').then(button => {
+							vscode.window.showInformationMessage('SUCCESS: Files were merged successfully.', 'Open file').then(button => {
 								vscode.window.setStatusBarMessage('Opened file', 5000);
 								workspace.openTextDocument(filePath).then(d => {
 									window.showTextDocument(d);
 								});
 							});
 						} else {
-							vscode.window.showWarningMessage('WARNING: There are some merge conflicts. Before pushing solve them', 'Open file').then(button => {
+							vscode.window.showWarningMessage('WARNING: There are some merge conflicts. Before pushing, solve them.', 'Open file').then(button => {
 								vscode.window.setStatusBarMessage('Opened file', 5000);
 								workspace.openTextDocument(filePath).then(d => {
 									window.showTextDocument(d);
 								});
 							});
 						}
-						
+
 						workspace.openTextDocument(filePath).then(d => {
 							window.showTextDocument(d);
 						});
@@ -70,7 +69,5 @@ export function comparePermissions(context: vscode.ExtensionContext) {
 					});
 			}
 		});
-
-		
 	});
 }

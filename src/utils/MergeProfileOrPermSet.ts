@@ -6,13 +6,13 @@ const utils = require('../../scripts/commons/fs-utils');
 const GenericMerger = require('../../scripts/mergePermSetOrProfile/mergers/GenericMerger');
 
 export default class MergeProfileOrPermSet {
-  repoPath;
-  
-  constructor(repoPath) {
+  repoPath: (string | undefined);
+
+  constructor(repoPath: string | undefined) {
     this.repoPath = repoPath;
   }
 
-  run(branch, filePath) {
+  run(branch: string, filePath: string): Promise<{ conflicts: any }> {
 
     return new Promise((resolve, reject) => {
       let currentBranch = '';
@@ -20,8 +20,8 @@ export default class MergeProfileOrPermSet {
       const TMP_DIR = path.join(this.repoPath, 'tmp');
 
       ASQ(42)
-        .then(function isBranchNameValid(done) {
-          git.branch(function(error, res) {
+        .then(function isBranchNameValid(done: any) {
+          git.branch(function (error: any, res: any) {
             if (error) {
               done.fail(error);
             } else if (res.all.indexOf(branch) > -1) {
@@ -32,8 +32,8 @@ export default class MergeProfileOrPermSet {
             }
           });
         })
-        .then(function isBranchClean(done) {
-          git.status(function(error, res) {
+        .then(function isBranchClean(done: any) {
+          git.status(function (error: any, res: any) {
             if (error) {
               done.fail(error);
             } else if (res.isClean()) {
@@ -45,8 +45,8 @@ export default class MergeProfileOrPermSet {
             }
           });
         })
-        .then(function checkoutOtherBranch(done) {
-          git.checkout(branch, function(err, res) {
+        .then(function checkoutOtherBranch(done: any) {
+          git.checkout(branch, function (err: any, res: any) {
             if (err) {
               done.fail(err);
             } else {
@@ -54,8 +54,8 @@ export default class MergeProfileOrPermSet {
             }
           });
         })
-        .then(function pull(done) {
-          git.pull(function(err, res) {
+        .then(function pull(done: any) {
+          git.pull(function (err: any, res: any) {
             if (err) {
               done.fail(err);
             } else {
@@ -63,7 +63,7 @@ export default class MergeProfileOrPermSet {
             }
           });
         })
-        .then(function copyFileInTmpDirectory(done) {
+        .then(function copyFileInTmpDirectory(done: any) {
           const fileName = path.basename(filePath);
           if (!fs.existsSync(TMP_DIR)) {
             fs.mkdirSync(TMP_DIR);
@@ -71,8 +71,8 @@ export default class MergeProfileOrPermSet {
           fs.copyFileSync(filePath, path.join(TMP_DIR, fileName));
           done();
         })
-        .then(function goBackToPreviousBranch(done) {
-          git.checkout(currentBranch, function(err, res) {
+        .then(function goBackToPreviousBranch(done: any) {
+          git.checkout(currentBranch, function (err: any, res: any) {
             if (err) {
               done.fail(res);
             } else {
@@ -80,7 +80,7 @@ export default class MergeProfileOrPermSet {
             }
           });
         })
-        .then(async function executeMerge(done) {
+        .then(async function executeMerge(done: any) {
           const fileName = path.basename(filePath);
           const theirsPath = path.join(TMP_DIR, fileName);
 
@@ -97,7 +97,7 @@ export default class MergeProfileOrPermSet {
 
           done(theirsPath, mergeResult);
         })
-        .then(function removeTmpDir(done, theirsPath, mergeResult) {
+        .then(function removeTmpDir(done: any, theirsPath: string, mergeResult: any) {
           fs.unlinkSync(theirsPath);
           fs.rmdirSync(TMP_DIR);
           resolve({
@@ -105,7 +105,7 @@ export default class MergeProfileOrPermSet {
           });
           done();
         })
-        .or(function(err) {
+        .or(function (err: any) {
           // goes back on current branch
           if (currentBranch) {
             git.checkout(currentBranch);
