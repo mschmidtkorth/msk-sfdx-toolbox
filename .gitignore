@@ -2,4 +2,6 @@
 .vscodeignore
 out/
 node_modules/
-src/OrgExplorer.ts
+src/command/OrgExplorer.ts
+src/media/Backup
+_DO_NOT_COMMIT/
