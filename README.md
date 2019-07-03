@@ -12,7 +12,7 @@ Simplifies development with Salesforce DX.
 - **>MSK: Open Current File In Org** *Show the currently opened file in your Salesforce org via your browser (e.g. `Account-Account Layout.layout-meta.xml` opens the Page Layout Editor).* This allows you to quickly confirm how the XML file is represented in the Salesforce org.
 - **>MSK: Open Org** *Open any Scratch Org, Sandbox or Dev Hub in the browser or display its expiration date.* This allows you to quickly switch between all authorized orgs and see to which Dev Hub they are related to.
 - **>MSK: Delete Scratch Org** *Delete any Scratch Org.*
-- **>MSK: Compare Permissions** *Intelligently compare Permission Sets or Profiles between your current branch and the `master` branch and generate a merge file.* This allows you to check for conflicts and provide a merged file before pushing your changes (uses `mergeProfileOrPermSet.sh`).
+- **>MSK: Compare Permissions** *Intelligently compare Permission Sets or Profiles between your current branch and the `master` branch and generate a merge file.* This allows you to check for conflicts and provide a merged file before pushing your changes.
 - **>MSK: Validate Changes** *Validate your local changes against any Scratch Org or Sandbox.* This allows you to check your changes before pushing them to remote.
 
 <!-- Image:
