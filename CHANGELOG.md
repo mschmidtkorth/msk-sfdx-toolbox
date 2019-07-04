@@ -79,3 +79,9 @@ Feature-completion.
 ### Modified
 
 - Replaced `mergeProfileOrPermSet.sh` with `mergeProfileOrPermSet.js` to make it OS-agnostic
+
+## 1.1.4
+
+### Modified
+
+- Updated instructions and Readme
