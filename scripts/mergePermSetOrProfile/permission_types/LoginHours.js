@@ -5,10 +5,6 @@ const AbstractPermission = require('./AbstractPermission');
  * Reference: https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_profile.htm
  */
 module.exports = class LoginHours extends AbstractPermission {
-  getId() {
-    return this.idProperty; // there can be only one entry in a profile
-  }
-
   constructor(permission) {
     super(permission, 'loginHours', [
       'fridayEnd',
@@ -26,6 +22,10 @@ module.exports = class LoginHours extends AbstractPermission {
       'wednesdayEnd',
       'wednesdayStart'
     ]);
+  }
+
+  getId() {
+    return this.idProperty; // there can be only one entry in a profile
   }
 
   /**
