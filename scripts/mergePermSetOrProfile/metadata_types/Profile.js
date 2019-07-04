@@ -14,14 +14,16 @@ module.exports = class Profile extends AbstractMetadataType {
       'description',
       'externalDataSourceAccesses',
       'fieldPermissions',
+      'fieldLevelSecurities', // deprecated in API 23
       'label',
       'layoutAssignments',
       'loginHours',
       'loginIpRanges',
       'objectPermissions',
       'pageAccesses',
+      'profileActionOverrides', // deprecated in API 45
       'recordTypeVisibilities',
-      'tabSettings',
+      'tabVisibilities',
       'userLicense',
       'userPermissions'
     ]);
