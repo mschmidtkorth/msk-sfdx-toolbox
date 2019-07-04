@@ -4,7 +4,6 @@ const factories = require('../factories');
  * Abstract class that contains the main logic to merge either a Profile or a Permission Set
  */
 module.exports = class GenericMerger {
-
   /**
    * Constructor
    * @param {AbstractMetadataType} theirs Metadata component to merge from
@@ -28,9 +27,7 @@ module.exports = class GenericMerger {
     const propertiesToMerge = this.theirs.getMergeProperties();
 
     // iterates over properties that need to be merged
-    for (let i = 0; i < propertiesToMerge.length; i++) {
-      let propName = propertiesToMerge[i];
-
+    for (let propName of propertiesToMerge) {
       if (
         !this.ours.containsProperty(propName) &&
         this.theirs.containsProperty(propName)
@@ -41,11 +38,8 @@ module.exports = class GenericMerger {
         this.ours.containsProperty(propName) &&
         this.theirs.containsProperty(propName)
       ) {
-        // both permission sets contain the current property. Executes merge.
+        // both contain the current property. Executes merge.
         conflicts |= this._mergePermissions(propName, this.theirs, this.ours);
-
-        // reorder the property array
-        this._reorderPermissions(propName, this.ours);
       }
     }
 
@@ -57,29 +51,6 @@ module.exports = class GenericMerger {
    */
   getMergeResult() {
     return this.ours.getContent();
-  }
-
-  /**
-   * Reorder the content of specified property
-   * @param {String} propName Property id
-   * @param {Object} dest Permission set to reorder
-   */
-  _reorderPermissions(propName, dest) {
-    let permissions = dest.getProperty(propName);
-
-    permissions.sort(function(a, b) {
-      let aPerm = factories.PermissionFactory.getPermissionInstance(
-        propName,
-        a
-      );
-      let bPerm = factories.PermissionFactory.getPermissionInstance(
-        propName,
-        b
-      );
-      return aPerm.compareTo(bPerm);
-    });
-
-    dest.setProperty(propName, permissions);
   }
 
   /**
@@ -101,39 +72,50 @@ module.exports = class GenericMerger {
    */
   _mergePermissions(propName, source, dest) {
     let sourcePermissions = source.getProperty(propName);
-    let destPermissions = dest.getProperty(propName);
+    let destPermissionsMap = {};
     let conflicts = false;
 
-    for (let i = 0; i < sourcePermissions.length; i++) {
-      let found = false;
-      let sourcePerm = factories.PermissionFactory.getPermissionInstance(
+    // for each permission in the destination maps the permission id to its instance
+    for (let item of dest.getProperty(propName)) {
+      let perm = factories.PermissionFactory.getPermissionInstance(
         propName,
-        sourcePermissions[i]
+        item
       );
 
-      for (let j = 0; j < destPermissions.length; j++) {
-        let destPerm = factories.PermissionFactory.getPermissionInstance(
-          propName,
-          destPermissions[j]
-        );
+      destPermissionsMap[perm.getId()] = perm;
+    }
 
-        if (destPerm.equals(sourcePerm)) {
-          // permission about same component
-          conflicts |= destPerm.merge(sourcePerm);
-          destPermissions[j] = destPerm.getPermission();
-          found = true;
-          break;
-        }
-      }
+    for (let item of sourcePermissions) {
+      let sourcePerm = factories.PermissionFactory.getPermissionInstance(
+        propName,
+        item
+      );
 
-      if (!found) {
-        // permission was not found. just add it
-        destPermissions.push(sourcePerm.getPermission());
+      let destPerm = destPermissionsMap[sourcePerm.getId()];
+
+      if (!destPerm) {
+        // permission is not in destination, just add it
+        destPermissionsMap[sourcePerm.getId()] = sourcePerm;
+      } else {
+        conflicts |= destPerm.merge(sourcePerm);
       }
     }
 
+    // extracts all permissions from map
+    let destPermissions = Object.keys(destPermissionsMap).map(
+      key => destPermissionsMap[key]
+    );
+
+    // reorder permissions
+    destPermissions.sort((a, b) => {
+      return a.compareTo(b);
+    });
+
     // updates the content of destination
-    dest.setProperty(propName, destPermissions);
+    dest.setProperty(
+      propName,
+      destPermissions.map(perm => perm.getPermission())
+    );
 
     return conflicts;
   }
