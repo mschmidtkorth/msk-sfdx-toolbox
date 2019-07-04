@@ -112,7 +112,10 @@ module.exports = class GenericMerger {
     });
 
     // updates the content of destination
-    dest.setProperty(propName, destPermissions.map(perm => perm.getPermission()));
+    dest.setProperty(
+      propName,
+      destPermissions.map(perm => perm.getPermission())
+    );
 
     return conflicts;
   }
