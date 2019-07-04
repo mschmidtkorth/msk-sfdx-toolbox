@@ -15,13 +15,13 @@ Simplifies development with Salesforce DX.
 - **>MSK: Compare Permissions** *Intelligently compare Permission Sets or Profiles between your current branch and the `master` branch and generate a merge file.* This allows you to check for conflicts and provide a merged file before pushing your changes.
 - **>MSK: Validate Changes** *Validate your local changes against any Scratch Org or Sandbox.* This allows you to check your changes before pushing them to remote.
 
-<!-- Image:
-\!\[feature X\]\(images/feature-x.png\)
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
->
-> Add screenshots for
-> All commands
-> Icon to open org-->
+### Demonstration
+#### Opening a Metadata File in Salesforce
+![Opening an XML File in Salesforce](images/OpenFileInOrg.gif)
+#### Comparing Permission Sets & Profiles
+![Comparing Permission Sets & Profiles](images/ComparePermissions.gif)
+#### Validating Changes Against Any Org
+![Validating Changes Against Any Org](images/ValidateAgainstOrg.gif)
 
 <!-- ## Known Issues
 Calling out known issues can help limit users opening duplicate issues against your extension. -->
