@@ -28,11 +28,11 @@ class StringValuePermission extends AbstractPermission {
 
     let conflicts = false;
 
-    // in this case permission variable it's a string instead of an object
-    if (this.permission !== otherPermission.permission) {
+    // in this case permission is just a string value
+    if (this.getPermission() !== otherPermission.getPermission()) {
       this.permission = this.buildConflictString(
-        this.permission,
-        otherPermission.permission
+        this.getPermission(),
+        otherPermission.getPermission()
       );
       conflicts = true;
     }
