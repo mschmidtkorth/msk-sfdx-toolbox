@@ -43,9 +43,7 @@ module.exports = class LoginHours extends AbstractPermission {
 
     let conflicts = false;
 
-    for (let i = 0; i < this.mergeProperties.length; i++) {
-      let prop = this.mergeProperties[i];
-
+    for (let prop of this.mergeProperties) {
       if (!this.hasProperty(prop) && otherPermission.hasProperty(prop)) {
         // just add it
         this.setProperty(prop, otherPermission.getProperty(prop));
@@ -64,4 +62,4 @@ module.exports = class LoginHours extends AbstractPermission {
 
     return conflicts;
   }
-}
+};
