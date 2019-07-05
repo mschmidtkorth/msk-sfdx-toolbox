@@ -29,43 +29,63 @@ export function comparePermissions(context: vscode.ExtensionContext) {
 			console.error('No permission files found.');
 			vscode.window.showErrorMessage('No permission files found. Have you added the project folder to your workspace? Stopping.', 'OK');
 		}
+
 		window.showQuickPick(displayFiles, { placeHolder: 'Select a permission file', matchOnDescription: true }).then(returnValue => {
 			if (typeof returnValue !== 'undefined') {
 				const filePath = returnValue.filePath;
-				vscode.window.setStatusBarMessage('Checking conflicts for ' + returnValue.label + ' ...', 5000);
 
-				console.log('Executing mergeProfileOrPermSet.js for ' + filePath);
+				cp.exec(
+					'git rev-parse --abbrev-ref HEAD',
+					{ cwd: utils.getPath() },
+					function (error: any, output: any) {
+						cp.exec(
+							`git for-each-ref --format '%(refname:short)' refs/heads/`,
+							{ cwd: utils.getPath() },
+							function (error: any, allBranches: any) {
+								let branches = allBranches.split('\n');
 
-				new MergeProfileOrPermSet(workspace.rootPath).run("master", filePath)
-					.then(res => {
-						if (!res.conflicts) {
-							vscode.window.showInformationMessage('SUCCESS: Files were merged successfully.', 'Open file').then(button => {
-								vscode.window.setStatusBarMessage('Opened file', 5000);
-								workspace.openTextDocument(filePath).then(d => {
-									window.showTextDocument(d);
+								window.showQuickPick(branches, { placeHolder: 'Select a local branch to compare your current branch "' + output + '" with', matchOnDescription: true }).then(branchValue => {
+									if (branchValue !== undefined) {
+										console.log('Comparing between branch (current) ' + output + ' and (selected) ' + branchValue);
+
+										vscode.window.setStatusBarMessage('Checking conflicts for ' + returnValue.label + ' on ' + branchValue + ' ...', 5000);
+
+										console.log('Executing mergeProfileOrPermSet.js for ' + filePath);
+
+										new MergeProfileOrPermSet(workspace.rootPath).run(branchValue, filePath)
+											.then(res => {
+												if (!res.conflicts) {
+													vscode.window.showInformationMessage('SUCCESS: Files were merged successfully.', 'Open file').then(button => {
+														vscode.window.setStatusBarMessage('Opened file', 5000);
+														workspace.openTextDocument(filePath).then(d => {
+															window.showTextDocument(d);
+														});
+													});
+												} else {
+													vscode.window.showWarningMessage('WARNING: There are some merge conflicts. Before pushing, solve them.', 'Open file').then(button => {
+														vscode.window.setStatusBarMessage('Opened file', 5000);
+														workspace.openTextDocument(filePath).then(d => {
+															window.showTextDocument(d);
+														});
+													});
+												}
+
+												workspace.openTextDocument(filePath).then(d => {
+													window.showTextDocument(d);
+												});
+											}).catch(err => { // via done.fail()
+												vscode.window.showErrorMessage(err.message, 'Discard uncommitted files', 'Show modified files').then(button => {
+													vscode.window.setStatusBarMessage('Discard uncommitted files', 5000);
+													if (button === 'Discard uncommitted files') {
+														vscode.commands.executeCommand('git.cleanAll');
+													} else {
+														vscode.commands.executeCommand('workbench.view.scm');
+													}
+												});
+											});
+									}
 								});
 							});
-						} else {
-							vscode.window.showWarningMessage('WARNING: There are some merge conflicts. Before pushing, solve them.', 'Open file').then(button => {
-								vscode.window.setStatusBarMessage('Opened file', 5000);
-								workspace.openTextDocument(filePath).then(d => {
-									window.showTextDocument(d);
-								});
-							});
-						}
-
-						workspace.openTextDocument(filePath).then(d => {
-							window.showTextDocument(d);
-						});
-					}).catch(err => { // via done.fail()
-						vscode.window.showErrorMessage(err.message, 'Discard uncommitted files', 'Show modified files').then(button => {
-							vscode.window.setStatusBarMessage('Discard uncommitted files', 5000);
-							if (button === 'Discard uncommitted files') {
-								vscode.commands.executeCommand('git.cleanAll');
-							} else {
-								vscode.commands.executeCommand('workbench.view.scm');
-							}
-						});
 					});
 			}
 		});

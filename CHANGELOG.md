@@ -85,3 +85,9 @@ Feature-completion.
 ### Modified
 
 - Updated instructions and Readme
+
+## 1.1.5
+
+### Added
+
+- **>MSK: Compare Permissions** Added selection of branch to compare with

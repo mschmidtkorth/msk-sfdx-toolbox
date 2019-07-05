@@ -68,6 +68,11 @@ export default class MergeProfileOrPermSet {
           if (!fs.existsSync(TMP_DIR)) {
             fs.mkdirSync(TMP_DIR);
           }
+
+          if (!fs.existsSync(filePath)) {
+            done.fail('The file ' + fileName + ' is not available on the selected branch.');
+          }
+
           fs.copyFileSync(filePath, path.join(TMP_DIR, fileName));
           done();
         })

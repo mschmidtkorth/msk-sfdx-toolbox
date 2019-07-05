@@ -7,7 +7,7 @@
 		"name": "Michael Schmidt-Korth",
 		"email": "mschmidtkorth@salesforce.com"
 	},
-	"version": "1.1.4",
+	"version": "1.1.5",
 	"preview": false,
 	"icon": "images/salesforceDX.png",
 	"galleryBanner": {
@@ -31,9 +31,16 @@
 	],
 	"keywords": [
 		"MSK",
+		"Salesforce Development",
+		"Apex",
+		"Lightning",
 		"SFDX",
 		"Salesforce DX",
+		"SalesforceDX",
+		"Developer Experience",
 		"Scratch Org",
+		"Dev Hub",
+		"Permissions",
 		"Sandbox",
 		"Metadata",
 		"Deployment",
