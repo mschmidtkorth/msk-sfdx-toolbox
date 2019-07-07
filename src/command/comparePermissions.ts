@@ -12,7 +12,8 @@ const fs = require('fs');
  * @author Michael Schmidt-Korth mschmidtkorth(at)salesforce.com
  */
 export function comparePermissions(context: vscode.ExtensionContext) {
-	vscode.window.showInformationMessage('Ensure your target branch is up to date. Files are compared locally.', 'OK'); // TODO add timeout
+	vscode.window.showInformationMessage('Ensure your target branch is up to date. Files are compared locally.', 'OK');
+
 	var utils = new Utils();
 
 	// Path is relative to the workspace directory
@@ -68,12 +69,15 @@ export function comparePermissions(context: vscode.ExtensionContext) {
 														});
 													});
 												} else {
-													vscode.window.showWarningMessage('WARNING: There are some merge conflicts. Before pushing, solve them.', 'Open file').then(button => {
+													vscode.window.showWarningMessage('WARNING: There are some merge conflicts. Before pushing, solve them.', 'Open file', 'Next conflict').then(button => {
 														vscode.window.setStatusBarMessage('Opened file', 5000);
 														workspace.openTextDocument(filePath).then(d => {
 															window.showTextDocument(d);
 															vscode.commands.executeCommand('merge-conflict.next');
 														});
+														if (button === 'Next conflict') {
+															vscode.commands.executeCommand('merge-conflict.next');
+														}
 													});
 												}
 
