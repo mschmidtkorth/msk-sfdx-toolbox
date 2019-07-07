@@ -2,57 +2,69 @@
 	"cls": {
 		"link": "lightning/setup/ApexClasses/page?address=%2F{%id}",
 		"object": "ApexClass",
-		"field": "Name"
+		"field": "Name",
+		"metadataHelp": "meta_classes"
 	},
 	"compactLayout": {
 		"link": "lightning/setup/ObjectManager/Event/CompactLayouts/{%id}/view",
 		"object": "CompactLayout",
 		"field": "DeveloperName",
-		"api": "tooling"
+		"api": "tooling",
+		"metadataHelp": "meta_layouts"
 	},
 	"delegateGroup": {
-		"link": "lightning/setup/DelegateGroups/home"
+		"link": "lightning/setup/DelegateGroups/home",
+		"metadataHelp": "meta_delegategroup"
 	},
 	"field": {
 		"link": "lightning/setup/ObjectManager/{%obj}/FieldsAndRelationships/{%id}/view",
 		"object": "CustomField",
 		"queryAddition": "TableEnumOrId = '{%obj}' AND DeveloperName = '{%name}'",
-		"api": "tooling"
+		"api": "tooling",
+		"metadataHelp": "customfield"
 	},
 	"flexipage": {
-		"link": "{%s}"
+		"link": "{%s}",
+		"metadataHelp": "meta_flexipage"
 	},
 	"flow": {
 		"link": "/builder_platform_interaction/flowBuilder.app?flowId={%id}&isdtp=p1",
 		"object": "Flow",
 		"queryAddition": "DefinitionId IN (SELECT Id FROM FlowDefinition WHERE DeveloperName = '{%name}')",
-		"api": "tooling"
+		"api": "tooling",
+		"metadataHelp": "meta_visual_workflow"
 	},
 	"globalValueSet": {
 		"link": "lightning/setup/Picklists/page?address=%2F{%id}",
 		"object": "GlobalValueSet",
 		"field": "DeveloperName",
-		"api": "tooling"
+		"api": "tooling",
+		"metadataHelp": "meta_globalvalueset"
 	},
 	"labels": {
-		"link": "lightning/setup/ExternalStrings/home"
+		"link": "lightning/setup/ExternalStrings/home",
+		"metadataHelp": "meta_customlabels"
 	},
 	"layout": {
 		"link": "lightning/setup/ObjectManager/Account/PageLayouts/{%id}/view",
 		"object": "Layout",
 		"queryAddition": "EntityDefinitionId = '{%obj}' AND Name = '{%name}'",
-		"api": "tooling"
+		"api": "tooling",
+		"metadataHelp": "meta_layouts"
 	},
 	"listView": {
 		"link": "lightning/o/{%obj}/list?filterName={%id}",
 		"object": "ListView",
-		"queryAddition": "SobjectType = '{%obj}' AND DeveloperName = '{%name}'"
+		"queryAddition": "SobjectType = '{%obj}' AND DeveloperName = '{%name}'",
+		"metadataHelp": "meta_listview"
 	},
 	"md": {
-		"link": "lightning/setup/CustomMetadata/home"
+		"link": "lightning/setup/CustomMetadata/home",
+		"metadataHelp": "meta_custommetadatatypes"
 	},
 	"object": {
-		"link": "lightning/setup/ObjectManager/{%s}/Details/view"
+		"link": "lightning/setup/ObjectManager/{%s}/Details/view",
+		"metadataHelp": "customobject"
 	},
 	"profile": {
 		"link": "lightning/setup/EnhancedProfiles/page?address=%2F{%id}",
@@ -60,43 +72,51 @@
 		"field": "Name",
 		"exceptions": [{
 			"Admin": "System Administrator"
-		}]
+		}],
+		"metadataHelp": "meta_profile"
 	},
 	"permissionset": {
 		"link": "lightning/setup/PermSets/page?address=%2F{%id}%3FretURL%3D%252Fsetup%252Fhome",
 		"object": "PermissionSet",
-		"field": "Name"
+		"field": "Name",
+		"metadataHelp": "meta_permissionset"
 	},
 	"quickAction": {
 		"link": "lightning/setup/ObjectManager/{%obj}/ButtonsLinksActions/{%id}/view",
 		"object": "QuickActionDefinition",
 		"queryAddition": "SobjectType = '{%obj}' AND DeveloperName = '{%name}'",
 		"selectAddition": "SobjectType",
-		"api": "tooling"
+		"api": "tooling",
+		"metadataHelp": "meta_quickaction"
 	},
 	"recordType": {
 		"link": "lightning/setup/ObjectManager/{%obj}/RecordTypes/{%id}/view",
 		"object": "RecordType",
-		"queryAddition": "SobjectType = '{%obj}' AND DeveloperName = '{%name}'"
+		"queryAddition": "SobjectType = '{%obj}' AND DeveloperName = '{%name}'",
+		"metadataHelp": "meta_recordtype"
 	},
 	"role": {
 		"link": "lightning/setup/Roles/page?address=%2F{%id}%3Fsetupid%3DRoles",
 		"object": "UserRole",
-		"field": "DeveloperName"
+		"field": "DeveloperName",
+		"metadataHelp": "meta_role"
 	},
 	"tab": {
 		"link": "lightning/setup/CustomTabs/page?address=%2F{%id}%3Fsetupid%3DCustomTabs",
 		"object": "TabDefinition",
 		"field": "SobjectName",
-		"selectAddition": "DurableId"
+		"selectAddition": "DurableId",
+		"metadataHelp": "meta_tab"
 	},
 	"validationRule": {
 		"link": "lightning/setup/ObjectManager/{%obj}/ValidationRules/{%id}/view",
 		"object": "ValidationRule",
 		"queryAddition": "EntityDefinitionId = '{%obj}' AND ValidationName = '{%name}'",
-		"api": "tooling"
+		"api": "tooling",
+		"metadataHelp": "meta_validationformulas"
 	},
 	"workflow": {
-		"link": "lightning/setup/WorkflowRules/page?address=%2F01Q&nodeId=WorkflowRules"
+		"link": "lightning/setup/WorkflowRules/page?address=%2F01Q&nodeId=WorkflowRules",
+		"metadataHelp": "meta_workflow"
 	}
 }

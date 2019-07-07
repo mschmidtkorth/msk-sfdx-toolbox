@@ -14,6 +14,7 @@ Simplifies development with Salesforce DX.
 - **>MSK: Delete Scratch Org** *Delete any Scratch Org.*
 - **>MSK: Compare Permissions** *Intelligently compare Permission Sets or Profiles between two branches and generate a merge file.* This allows you to check for conflicts and provide a merged file before pushing your changes.
 - **>MSK: Validate Changes** *Validate your local changes against any Scratch Org or Sandbox.* This allows you to check your changes before pushing them to remote.
+- **>MSK: Open Help for Metadata Type** *Open the Metadata API online help for the currently opened file.* This helps you to manually edit Metadata `.xml` files.
 
 ### Demonstration
 

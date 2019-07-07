@@ -97,3 +97,13 @@ Feature-completion.
 ### Added
 
 - **>MSK: Compare Permissions** Improved merge markers to be recognized by VS Code and added auto-jump to first marker
+
+## 1.1.7
+
+### Added
+
+- New command **>MSK: Show Help for File In Org**: Show the Metadata API help for the currently opened file.
+
+### Fixed
+
+- **>MSK: Open Current File In Org** Command was not working when initiated via Command Palette

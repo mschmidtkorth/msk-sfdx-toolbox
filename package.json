@@ -7,7 +7,7 @@
 		"name": "Michael Schmidt-Korth",
 		"email": "mschmidtkorth@salesforce.com"
 	},
-	"version": "1.1.6",
+	"version": "1.1.7",
 	"preview": false,
 	"icon": "images/salesforceDX.png",
 	"galleryBanner": {
@@ -52,6 +52,7 @@
 		"onCommand:msk.deleteScratchOrg",
 		"onCommand:msk.openScratchOrg",
 		"onCommand:msk.openFileInOrg",
+		"onCommand:msk.showHelpForType",
 		"onView:orgExplorer",
 		"onLanguage:apex"
 	],
@@ -76,14 +77,21 @@
 				"command": "msk.validateChanges",
 				"title": "Validate Changes",
 				"category": "MSK"
-			},
-			{
+			}, {
 				"command": "msk.openFileInOrg",
 				"title": "Open Current File in Org",
 				"category": "MSK",
 				"icon": {
 					"light": "./src/media/openFileInSalesforceLight.svg",
 					"dark": "./src/media/openFileInSalesforceDark.svg"
+				}
+			}, {
+				"command": "msk.showHelpForType",
+				"title": "Open Help for Metadata Type",
+				"category": "MSK",
+				"icon": {
+					"light": "./src/media/showHelpForTypeLight.svg",
+					"dark": "./src/media/showHelpForTypeDark.svg"
 				}
 			}
 		],
@@ -139,10 +147,18 @@
 					"command": "msk.openFileInOrg",
 					"group": "3_compare",
 					"when": "resourceFilename =~ /.*(-meta\\.xml|\\.cls)$/"
+				}, {
+					"command": "msk.showHelpForType",
+					"group": "navigation",
+					"when": "resourceFilename =~ /.*(-meta\\.xml|\\.cls)$/"
 				}
 			],
 			"editor/title": [{
 				"command": "msk.openFileInOrg",
+				"group": "navigation",
+				"when": "resourceFilename =~ /.*(-meta\\.xml|\\.cls)$/"
+			}, {
+				"command": "msk.showHelpForType",
 				"group": "navigation",
 				"when": "resourceFilename =~ /.*(-meta\\.xml|\\.cls)$/"
 			}]
