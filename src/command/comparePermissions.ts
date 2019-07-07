@@ -12,7 +12,7 @@ const fs = require('fs');
  * @author Michael Schmidt-Korth mschmidtkorth(at)salesforce.com
  */
 export function comparePermissions(context: vscode.ExtensionContext) {
-	vscode.window.showInformationMessage('Ensure your master branch is up to date. Files are compared locally.', 'OK');
+	vscode.window.showInformationMessage('Ensure your target branch is up to date. Files are compared locally.', 'OK'); // TODO add timeout
 	var utils = new Utils();
 
 	// Path is relative to the workspace directory
@@ -37,16 +37,22 @@ export function comparePermissions(context: vscode.ExtensionContext) {
 				cp.exec(
 					'git rev-parse --abbrev-ref HEAD',
 					{ cwd: utils.getPath() },
-					function (error: any, output: any) {
+					function (error: any, currentBranch: string) {
 						cp.exec(
 							`git for-each-ref --format '%(refname:short)' refs/heads/`,
 							{ cwd: utils.getPath() },
 							function (error: any, allBranches: any) {
-								let branches = allBranches.split('\n');
+								let branches = allBranches.split(/[\r\n]+/);
 
-								window.showQuickPick(branches, { placeHolder: 'Select a local branch to compare your current branch "' + output + '" with', matchOnDescription: true }).then(branchValue => {
+								branches.forEach((item: string, index: number) => {
+									if (item.trim() === currentBranch.trim()) {
+										branches.splice(index, 1);
+									}
+								});
+
+								window.showQuickPick(branches, { placeHolder: 'Select a local branch to compare your current branch "' + currentBranch + '" with', matchOnDescription: true }).then(branchValue => {
 									if (branchValue !== undefined) {
-										console.log('Comparing between branch (current) ' + output + ' and (selected) ' + branchValue);
+										console.log('Comparing between branch (current) ' + currentBranch + ' and (selected) ' + branchValue);
 
 										vscode.window.setStatusBarMessage('Checking conflicts for ' + returnValue.label + ' on ' + branchValue + ' ...', 5000);
 
@@ -66,15 +72,17 @@ export function comparePermissions(context: vscode.ExtensionContext) {
 														vscode.window.setStatusBarMessage('Opened file', 5000);
 														workspace.openTextDocument(filePath).then(d => {
 															window.showTextDocument(d);
+															vscode.commands.executeCommand('merge-conflict.next');
 														});
 													});
 												}
 
 												workspace.openTextDocument(filePath).then(d => {
 													window.showTextDocument(d);
+													vscode.commands.executeCommand('merge-conflict.next');
 												});
 											}).catch(err => { // via done.fail()
-												vscode.window.showErrorMessage(err.message, 'Discard uncommitted files', 'Show modified files').then(button => {
+												vscode.window.showErrorMessage(err.message, 'Discard uncommitted files', 'Show modified files', 'OK').then(button => {
 													vscode.window.setStatusBarMessage('Discard uncommitted files', 5000);
 													if (button === 'Discard uncommitted files') {
 														vscode.commands.executeCommand('git.cleanAll');

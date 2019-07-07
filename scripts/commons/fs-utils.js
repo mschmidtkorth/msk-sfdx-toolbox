@@ -46,7 +46,9 @@ function readXmlFileAndConvertToJson(filePath) {
  */
 function convertJsonToXmlAndWriteToFile(jsonData, filePath) {
   return new Promise((resolve, reject) => {
-    const xmlData = new xml2js.Builder().buildObject(jsonData);
+    const xmlData = new xml2js.Builder().buildObject(jsonData)
+      .replace(/&gt;/g, '>')
+      .replace(/&lt;/g, '<'); // xml2js automatically encodes HTML characters - undo this for merge markers, otherwise they are not recognized. Note: The stringify option for the Builder class does not work. https://github.com/Leonidas-from-XIV/node-xml2js/pull/451
     fs.writeFile(filePath, xmlData, err => {
       if (err) return reject(err);
       resolve();

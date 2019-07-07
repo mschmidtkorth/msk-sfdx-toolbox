@@ -125,6 +125,6 @@ module.exports = class AbstractPermission {
    * @param {String} other other value
    */
   buildConflictString(current, other) {
-    return `\n----- CURRENT\n${current}\n===== OTHER\n${other}\n-----\n`;
+    return `\n<<<<<<< CURRENT\n${current}\n======= \n${other}\n>>>>>>> OTHER\n`;
   }
 }

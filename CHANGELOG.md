@@ -91,3 +91,9 @@ Feature-completion.
 ### Added
 
 - **>MSK: Compare Permissions** Added selection of branch to compare with
+
+## 1.1.6
+
+### Added
+
+- **>MSK: Compare Permissions** Improved merge markers to be recognized by VS Code and added auto-jump to first marker

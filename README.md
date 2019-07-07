@@ -12,15 +12,21 @@ Simplifies development with Salesforce DX.
 - **>MSK: Open Current File In Org** *Show the currently opened XML file in your Salesforce org via your browser (e.g. `Account-Account Layout.layout-meta.xml` opens the Page Layout Editor).* This allows you to quickly confirm how the XML file is represented in the Salesforce org.
 - **>MSK: Open Org** *Open any Scratch Org, Sandbox or Dev Hub in the browser or display its expiration date.* This allows you to quickly switch between all authorized orgs and see to which Dev Hub they are related to.
 - **>MSK: Delete Scratch Org** *Delete any Scratch Org.*
-- **>MSK: Compare Permissions** *Intelligently compare Permission Sets or Profiles between your current branch and the `master` branch and generate a merge file.* This allows you to check for conflicts and provide a merged file before pushing your changes.
+- **>MSK: Compare Permissions** *Intelligently compare Permission Sets or Profiles between two branches and generate a merge file.* This allows you to check for conflicts and provide a merged file before pushing your changes.
 - **>MSK: Validate Changes** *Validate your local changes against any Scratch Org or Sandbox.* This allows you to check your changes before pushing them to remote.
 
 ### Demonstration
+
 #### Opening a Metadata File in Salesforce
+
 ![Opening an XML File in Salesforce](images/OpenFileInOrg.gif)
+
 #### Comparing Permission Sets & Profiles
+
 ![Comparing Permission Sets & Profiles](images/ComparePermissions.gif)
+
 #### Validating Changes Against Any Org
+
 ![Validating Changes Against Any Org](images/ValidateAgainstOrg.gif)
 
 <!-- ## Known Issues
@@ -35,10 +41,11 @@ Calling out known issues can help limit users opening duplicate issues against y
 5. **>MSK: Open Current File In Org** and **>MSK: Compare Permissions** can also be executed via the right-click context menu for any open file, directly from the editors action buttons or from the file explorer.
 
 ### Comparing Permissions
-Permission files (Profiles or Permission Sets) can be compared against their current version on your master branch to highlight conflicts.
-1. Check out your `master` branch (to compare changes against) and ensure it is up-to-date (as you want to compare against the most recent version).
+
+Permission files (Profiles or Permission Sets) can be compared against their current version on any other branch to highlight conflicts.
+1. Check out your other branch - e.g. `master` - (to compare changes against) and ensure it is up-to-date (as you want to compare against the most recent version).
 2. Check out your `feature`/`development` branch (to compare changes from).
-3. Use **>MSK: Compare Permissions** to select the Profile or Permission Set.
+3. Use **>MSK: Compare Permissions** to select the Profile or Permission Set and your branch to compare against.
 4. Receive a success message if merging concluded without conflicts or check the conflict file.
 5. *Note:* Comparison is not done on a line-by-line basis as e.g. performed by Git, but by comparing the actual metadata and its content. Git-like comparison results in lots of false-positives and difficult to track changes.
 
