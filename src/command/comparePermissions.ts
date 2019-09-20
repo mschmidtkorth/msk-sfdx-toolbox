@@ -64,7 +64,7 @@ export function comparePermissions(context: vscode.ExtensionContext) {
 							`git for-each-ref --format '%(refname:short)' refs/heads/`,
 							{ cwd: utils.getPath() },
 							function (error: any, allBranches: any) {
-								let branches = allBranches.split(/[\r\n]+/);
+								let branches = allBranches.trim().split(/[\r\n]+/);
 
 								branches.forEach((item: string, index: number) => {
 									if (item.trim() === currentBranch.trim()) {
