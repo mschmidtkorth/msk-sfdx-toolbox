@@ -41,9 +41,9 @@ export default class Utils {
 	 * @author Michael Schmidt-Korth mschmidtkorth(at)salesforce.com
 	 */
 	getPath(): string {
-		var PATH: any;
-		if (typeof vscode.workspace.getConfiguration('msk') == 'undefined') {
-			PATH = vscode.workspace.rootPath; // e.g. '/Users/mschmidtkorth/SFDX/Hilti/evolution'
+    var PATH: any;
+		if (vscode.workspace.getConfiguration('msk').get('defaultWorkingDirectory') === '') {
+      PATH = vscode.workspace.rootPath; // e.g. '/Users/mschmidtkorth/SFDX/Hilti/evolution'
 		} else {
 			const mskConfig = vscode.workspace.getConfiguration('msk');
 			PATH = mskConfig.get('defaultWorkingDirectory');
