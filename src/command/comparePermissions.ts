@@ -12,7 +12,28 @@ const fs = require('fs');
  * @author Michael Schmidt-Korth mschmidtkorth(at)salesforce.com
  */
 export function comparePermissions(context: vscode.ExtensionContext) {
-	vscode.window.showInformationMessage('Ensure your target branch is up to date. Files are compared locally.', 'OK');
+	vscode.window.withProgress({
+		location: vscode.ProgressLocation.Notification,
+		title: 'Ensure your target branch is up to date. Files are compared locally.',
+		cancellable: true
+	}, (progress, token) => {
+		token.onCancellationRequested(() => {
+			console.log('User cancelled permission comparison.');
+			return;
+		});
+
+		progress.report({ increment: 0 });
+
+		setTimeout(() => { progress.report({ increment: 25 }); }, 1000);
+		setTimeout(() => { progress.report({ increment: 50 }); }, 2000);
+		setTimeout(() => { progress.report({ increment: 75 }); }, 3000);
+
+		var p = new Promise(resolve => {
+			setTimeout(() => { resolve(); }, 5000);
+		});
+
+		return p;
+	});
 
 	var utils = new Utils();
 
