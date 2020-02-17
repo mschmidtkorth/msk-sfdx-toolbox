@@ -22,7 +22,7 @@ class StringValuePermission extends AbstractPermission {
     // checks that both permissions refer to same component
     if (!this.equals(otherPermission)) {
       throw new Error(
-        'You can only merge permission referring to same component'
+        'You can only merge permissions referring to the same component.'
       );
     }
 
