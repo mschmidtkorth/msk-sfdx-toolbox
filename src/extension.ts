@@ -32,7 +32,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	/* Shows currently opened file in browser / org. */
 	context.subscriptions.push(vscode.commands.registerCommand('msk.openFileInOrg',
-		function execute(uri: vscode.Uri) { // NOTE!! It fails - now it only runs via context menu...
+		function execute(uri: vscode.Uri) { // TODO Fails - only runs via context menu
 			if (vscode.window.activeTextEditor === undefined) { // TODO check for valid file extension.
 				vscode.window.showErrorMessage('Please open any XML file first.');
 			} else {
