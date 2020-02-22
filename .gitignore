@@ -5,4 +5,8 @@ node_modules/
 src/OrgExplorer.ts
 src/command/OrgExplorer.ts
 src/media/Backup
+src/test
 _DO_NOT_COMMIT/
+*.zip
+*.mov
+*.mp4
